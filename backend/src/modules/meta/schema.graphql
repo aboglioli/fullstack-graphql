@@ -1,0 +1,9 @@
+type MetaInformation {
+  version: String!
+  author: String!
+  uptime: String!
+}
+
+type Query {
+  meta: MetaInformation!
+}

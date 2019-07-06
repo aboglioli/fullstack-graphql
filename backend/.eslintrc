@@ -1,0 +1,50 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "mocha": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all"
+      }
+    ],
+    "eqeqeq": ["error", "always"],
+    "no-return-await": 2,
+    "require-await": 2,
+    "comma-dangle": ["error", "always-multiline"],
+    "semi": ["error", "always"],
+    "no-console": 0
+  },
+  "plugins": [
+    "import",
+    "jest",
+    "prettier"
+  ],
+  "globals": {
+    "require": false,
+    "module": false,
+    "process": false,
+    "__filename": false,
+    "__dirname": false,
+  }
+}

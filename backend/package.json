@@ -1,0 +1,52 @@
+{
+  "name": "turnalia-server",
+  "version": "0.0.1",
+  "description": "Sistema de turnos",
+  "main": "src/index.js",
+  "repository": "git@github.com:aboglioli/turnalia-server.git",
+  "author": "Alan Boglioli <alan.boglioli@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon -e js,graphql -x node src/index.js",
+    "debug": "cross-env NODE_ENV=development nodemon -e js,graphql -x node --inspect src/index.js",
+    "playground": "graphql playground",
+    "lint": "eslint --fix src/ tests/",
+    "test": "cross-env NODE_ENV=test jest src tests",
+    "test:watch": "cross-env NODE_ENV=test jest --watch src tests",
+    "coverage": "cross-env NODE_ENV=test jest --collectCoverageFrom=src/**.js --coverage test"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dataloader-sequelize": "^2.0.0",
+    "dotenv": "^8.0.0",
+    "graphql-relay": "^0.6.0",
+    "graphql-sequelize": "^9.3.6",
+    "graphql-shield": "^5.3.5",
+    "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.5.1",
+    "merge-graphql-schemas": "^1.5.8",
+    "mongoose": "^5.6.0",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.2",
+    "redis": "^2.8.0",
+    "sequelize": "^5.8.7"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jest": "^22.6.4",
+    "eslint-plugin-prettier": "^3.1.0",
+    "graphql-cli": "^3.0.11",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "redis-mock": "^0.44.0",
+    "sequelize-cli": "^5.4.0",
+    "sqlite3": "^4.0.8"
+  }
+}

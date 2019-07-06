@@ -1,0 +1,14 @@
+type KeyValue {
+  key: String!
+  value: String!
+}
+
+type Query {
+  keyValue(key: String!): KeyValue
+  keyValueExists(key: String!): Boolean!
+}
+
+type Mutation {
+  setKeyValue(key: String!, value: String!): KeyValue!
+  deleteKeyValue(key: String!): KeyValue
+}
