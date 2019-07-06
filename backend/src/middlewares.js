@@ -1,26 +1,4 @@
-const applyTo = ({ Query, Mutation }, middleware) => {
-  Query =
-    Query &&
-    Query.reduce(
-      (obj, resolver) => ({
-        ...obj,
-        [resolver]: middleware,
-      }),
-      {},
-    );
-
-  Mutation =
-    Mutation &&
-    Mutation.reduce(
-      (obj, resolver) => ({
-        ...obj,
-        [resolver]: middleware,
-      }),
-      {},
-    );
-
-  return { Query, Mutation };
-};
+const { applyMiddleware } = require('./utils/middleware');
 
 const isLoggedIn = (resolve, root, args, ctx, info) => {
   if (!ctx.user) {
@@ -30,7 +8,7 @@ const isLoggedIn = (resolve, root, args, ctx, info) => {
   return resolve(root, args, ctx, info);
 };
 
-const loggedIn = applyTo(
+const loggedIn = applyMiddleware(
   {
     Query: ['keyValue', 'keyValueExists', 'me'],
     Mutation: ['setKeyValue', 'deleteKeyValue'],

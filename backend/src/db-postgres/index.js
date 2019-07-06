@@ -62,6 +62,5 @@ module.exports = {
     onSync && onSync();
   },
   sequelize,
-  Sequelize,
   models,
 }

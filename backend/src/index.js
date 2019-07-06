@@ -1,6 +1,8 @@
 const startServer = require('./server');
+const config = require('./config');
 const mongo = require('./db-mongo');
 const postgres = require('./db-postgres');
+const redis = require('./redis');
 
 (async () => {
   const app = await startServer();
@@ -18,4 +20,7 @@ const postgres = require('./db-postgres');
     onConnected: () => console.log('[POSTGRES] Connected'),
     onSync: () => console.log('[POSTGRES] Synchronized'),
   });
+
+  // redis
+  redis && redis.connected && console.log('[REDIS] Connected');
 })();
