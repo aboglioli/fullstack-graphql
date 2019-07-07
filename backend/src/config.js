@@ -5,7 +5,7 @@ const mergeConfig = (env1, env2) => ({ ...env1, ...env2 });
 const config = {
   development: {
     logging: true,
-    port: 4000,
+    port: process.env.APP_PORT,
     jwtSecret: process.env.JWT_SECRET,
 
     mongoHost: process.env.MONGO_HOST,
