@@ -10,23 +10,19 @@ const {
   postgresPort: port,
   postgresDatabase: database,
   postgresUser: username,
-  postgresPassword: password
+  postgresPassword: password,
 } = config;
 
-const sequelize = new Sequelize(
+const sequelize = new Sequelize(database, username, password, {
+  host,
+  port,
   database,
   username,
   password,
-  {
-    host,
-    port,
-    database,
-    username,
-    password,
-  },
-);
+});
 
-const models = fs.readdirSync(__dirname)
+const models = fs
+  .readdirSync(__dirname)
   .filter(file => {
     return (
       file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
@@ -63,4 +59,4 @@ module.exports = {
   },
   sequelize,
   models,
-}
+};

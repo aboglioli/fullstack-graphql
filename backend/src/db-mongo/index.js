@@ -28,7 +28,7 @@ module.exports = {
       mongoPort: port,
       mongoDatabase: database,
       mongoUser: user,
-      mongoPassword: password
+      mongoPassword: password,
     } = config;
     const connectionString =
       user && password
@@ -47,8 +47,7 @@ module.exports = {
       mongoose.connection.on('connected', () => {
         onConnected(connectionString);
       });
-    onError &&
-      mongoose.connection.on('error', onError);
+    onError && mongoose.connection.on('error', onError);
     onDisconnected && mongoose.connection.on('disconnected', onDisconnected);
 
     return connection;

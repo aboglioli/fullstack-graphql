@@ -2,7 +2,6 @@ const { createContext, EXPECTED_OPTIONS_KEY } = require('dataloader-sequelize');
 const { resolver } = require('graphql-sequelize');
 
 const { getUser } = require('./utils/user');
-const config = require('./config');
 const mongo = require('./db-mongo');
 const postgres = require('./db-postgres');
 

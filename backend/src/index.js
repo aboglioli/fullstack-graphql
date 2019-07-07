@@ -1,5 +1,4 @@
 const startServer = require('./server');
-const config = require('./config');
 const mongo = require('./db-mongo');
 const postgres = require('./db-postgres');
 const redis = require('./redis');
