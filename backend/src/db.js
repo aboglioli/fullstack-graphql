@@ -6,7 +6,7 @@ module.exports = {
     await mongo.connect({ reset });
     await sequelize.connect({ reset });
   },
-  sequelize: sequelize.sequelize,
+  sequelize: sequelize.sequelize, // comment this to ignore Sequelize
   models: {
     ...mongo.models,
     ...sequelize.models,

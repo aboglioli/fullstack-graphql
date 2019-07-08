@@ -1,19 +1,22 @@
 const { createContext, EXPECTED_OPTIONS_KEY } = require('dataloader-sequelize');
 const { resolver } = require('graphql-sequelize');
 
-const { getUser } = require('./utils/user');
 const { models, sequelize } = require('./db');
+const { getUser } = require('./utils/user');
 
-// DataLoader for Sequelize
 resolver.contextTopOptions = { [EXPECTED_OPTIONS_KEY]: EXPECTED_OPTIONS_KEY };
 
 module.exports = ({ request }) => {
-  // Create DataLoader for each request
-  const dataloaderContext = createContext(sequelize);
+  let ctx = {};
 
-  let ctx = {
-    [EXPECTED_OPTIONS_KEY]: dataloaderContext,
-  };
+  // Create DataLoader for each request
+  if (sequelize) {
+    const dataloaderContext = createContext(sequelize);
+
+    ctx = {
+      [EXPECTED_OPTIONS_KEY]: dataloaderContext,
+    };
+  }
 
   // Get Authorization token
   const authorization = request && request.get('Authorization');
