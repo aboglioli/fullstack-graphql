@@ -39,7 +39,7 @@ class Server {
       throw new Error('Server is not initialized');
     }
 
-    const { token } = await this.request(
+    const { login: { token } } = await this.request(
       `
         mutation login ($username: String!, $password: String!) {
           login(username: $username, password: $password) {

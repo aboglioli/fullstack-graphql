@@ -1,5 +1,6 @@
 const Server = require('./server');
 const seeder = require('./seeder');
+const { models } = require('../src/db-mongo');
 const { getError } = Server;
 
 const SIGNUP_MUTATION = `
@@ -112,12 +113,19 @@ describe('User', () => {
     expect(user.email).toBe(seeder.user.email);
   });
 
+  test('User not validated after creation', async () => {
+    const user = await models.MongoUser.findOne({ username: seeder.user.username });
+    expect(user.validated).toBe(false);
+
+    user.validated = true;
+    await user.save();
+  });
+
   test('Login with new user', async () => {
-    const { login } = await server.request(LOGIN_MUTATION, {
+    const { login: { user, token } } = await server.request(LOGIN_MUTATION, {
       username: seeder.user.username,
       password: seeder.user.password,
     });
-    const { user, token } = login;
 
     expect(typeof token).toBe('string');
     expect(user.username).toBe(seeder.user.username);
@@ -127,11 +135,10 @@ describe('User', () => {
 
   test('Query "me"', async () => {
     await server.login('user', '123456');
-    const { user } = await server.client.request(ME_QUERY);
+    const { me } = await server.client.request(ME_QUERY);
 
-    expect(typeof token).toBe('string');
-    expect(user.username).toBe(seeder.user.username);
-    expect(user.name).toBe(seeder.user.name);
-    expect(user.email).toBe(seeder.user.email);
+    expect(me.username).toBe(seeder.user.username);
+    expect(me.name).toBe(seeder.user.name);
+    expect(me.email).toBe(seeder.user.email);
   });
 });
