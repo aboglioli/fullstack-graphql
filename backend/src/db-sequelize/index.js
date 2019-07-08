@@ -6,11 +6,11 @@ const basename = path.basename(__filename);
 const config = require('../config');
 
 const {
-  postgresHost: host,
-  postgresPort: port,
-  postgresDatabase: database,
-  postgresUser: username,
-  postgresPassword: password,
+  sequelizeHost: host,
+  sequelizePort: port,
+  sequelizeDatabase: database,
+  sequelizeUser: username,
+  sequelizePassword: password,
 } = config;
 
 const sequelize = new Sequelize(database, username, password, {

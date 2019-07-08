@@ -3,14 +3,14 @@ const { resolver } = require('graphql-sequelize');
 
 const { getUser } = require('./utils/user');
 const mongo = require('./db-mongo');
-const postgres = require('./db-postgres');
+const sequelize = require('./db-sequelize');
 
 // DataLoader for Sequelize
 resolver.contextTopOptions = { [EXPECTED_OPTIONS_KEY]: EXPECTED_OPTIONS_KEY };
 
 module.exports = ({ request }) => {
   // Create DataLoader for each request
-  const dataloaderContext = createContext(postgres.sequelize);
+  const dataloaderContext = createContext(sequelize.sequelize);
 
   let ctx = {
     [EXPECTED_OPTIONS_KEY]: dataloaderContext,
@@ -29,7 +29,7 @@ module.exports = ({ request }) => {
     request,
     models: {
       ...mongo.models,
-      ...postgres.models,
+      ...sequelize.models,
     },
   };
 };
