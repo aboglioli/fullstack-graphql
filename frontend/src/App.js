@@ -1,14 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
-import Nav from './components/Nav';
-import Dashboard from './components/Dashboard';
+import routes from './routes';
+import Routes from './utils/Routes';
 
-const App = () => (
-  <Router>
-    <Nav />
-    <Dashboard />
-  </Router>
-);
+const App = () => <Routes routes={routes} />;
 
 export default App;

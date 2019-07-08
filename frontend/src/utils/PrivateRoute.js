@@ -1,51 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import User from '../context/User';
 
-const ME_QUERY = gql`
-  query me {
-    me {
-      id
-      username
-      name
-      email
-    }
-  }
-`;
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Query query={ME_QUERY}>
-    {({ data, loading, error }) => {
-      if (loading) return null;
-
-      const loggedIn = !error && data && data.me;
-
-      return (
+const PrivateRoute = ({ render, redirectTo, ...rest }) => {
+  return (
+    <User>
+      {user => (
         <Route
           {...rest}
           render={props =>
-            loggedIn ? (
-              <Component {...props} />
+            user ? (
+              render(props)
             ) : (
               <Redirect
                 to={{
-                  pathname: '/login',
+                  pathname: redirectTo,
                   state: { from: props.location },
                 }}
               />
             )
           }
         />
-      );
-    }}
-  </Query>
-);
+      )}
+    </User>
+  );
+};
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  render: PropTypes.func.isRequired,
   location: PropTypes.object,
+  redirectTo: PropTypes.string,
 };
 
 export default PrivateRoute;

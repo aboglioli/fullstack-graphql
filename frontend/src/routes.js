@@ -1,21 +1,39 @@
-import Home from './Home';
+import Dashboard from './Dashboard';
 import Login from './Login';
+import Home from './ProtectedPage';
+import Page2 from './ProtectedPage';
 import Meta from './Meta';
+import NotFound from './NotFound';
 
-const routes = [
-  {
-    path: '/',
-    exact: true,
-    private: true,
-    component: Home,
-  },
+let routes = [
   {
     path: '/login',
     component: Login,
   },
   {
-    path: '/meta',
-    component: Meta,
+    path: '/',
+    private: true,
+    component: Dashboard,
+    routes: [
+      {
+        path: '/home',
+        private: true,
+        component: Home,
+      },
+      {
+        path: '/page2',
+        private: true,
+        component: Page2,
+      },
+      {
+        path: '/meta',
+        private: true,
+        component: Meta,
+      },
+      {
+        component: NotFound,
+      },
+    ],
   },
 ];
 
