@@ -1,26 +1,17 @@
 const startServer = require('./server');
-const { sequelizeDialect } = require('./config');
-const mongo = require('./db-mongo');
-const sequelize = require('./db-sequelize');
+const db = require('./db');
 const redis = require('./redis');
 
 (async () => {
   const app = await startServer();
   console.log('[SERVER] Running on', app.address());
 
-  // Mongo
+  // Connect to DBs
   try {
-    await mongo.connect();
-    console.log('[MONGO] Connected');
+    await db.connect();
+    console.log('[DATABASE] Connected');
   } catch (err) {
-    console.log(`[MONGO] Error: ${err}`);
-  }
-
-  try {
-    await sequelize.connect();
-    console.log(`[SEQUELIZE] Connected to ${sequelizeDialect}`);
-  } catch (err) {
-    console.log(`[SEQUELIZE] Error: ${err}`);
+    console.log(`[DATABASE] Error: ${err}`);
   }
 
   // redis

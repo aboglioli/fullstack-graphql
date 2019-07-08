@@ -114,7 +114,9 @@ describe('User', () => {
   });
 
   test('User not validated after creation', async () => {
-    const user = await models.MongoUser.findOne({ username: seeder.user.username });
+    const user = await models.MongoUser.findOne({
+      username: seeder.user.username,
+    });
     expect(user.validated).toBe(false);
 
     user.validated = true;
@@ -122,7 +124,9 @@ describe('User', () => {
   });
 
   test('Login with new user', async () => {
-    const { login: { user, token } } = await server.request(LOGIN_MUTATION, {
+    const {
+      login: { user, token },
+    } = await server.request(LOGIN_MUTATION, {
       username: seeder.user.username,
       password: seeder.user.password,
     });
