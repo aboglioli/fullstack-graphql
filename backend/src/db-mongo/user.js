@@ -47,6 +47,6 @@ userSchema.methods.verifyPassword = function(password) {
 };
 
 module.exports = {
-  name: 'User',
+  name: 'MongoUser',
   model: mongoose.model('User', userSchema),
 };

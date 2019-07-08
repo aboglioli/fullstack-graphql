@@ -1,9 +1,9 @@
 const { GraphQLClient, request } = require('graphql-request');
-const config = require('../src/config');
-const db = require('../src/db-mongo');
 
+const config = require('../src/config');
+const mongo = require('../src/db-mongo');
+const sequelize = require('../src/db-sequelize');
 const startServer = require('../src/server');
-const { Mutation: UserMutations } = require('../src/modules/user/resolvers');
 
 // mock redis
 if (config.mockRedis) {
@@ -15,42 +15,46 @@ class Server {
     this.app = await startServer();
     const { port } = this.app.address();
     this.host = `http://localhost:${port}`;
-
-    return this.host;
   }
 
   stop() {
     if (this.app) {
       this.app.close();
-      return true;
     }
-    return false;
   }
 
   async connectDb(prefix = '') {
     if (prefix) {
       config.mongoDatabase += `-${prefix}`;
+      config.sequelizeDatabase += `-${prefix}`;
     }
 
-    await db.connect();
-    await db.reset();
+    // Reset DBs
+    await mongo.connect({ reset: true });
+    await sequelize.connect({ reset: true });
   }
 
   async login(username, password) {
     if (!this.host) {
       throw new Error('Server is not initialized');
     }
-    const { token } = await UserMutations.login(
-      null,
+
+    const { token } = await this.request(
+      `
+        mutation login ($username: String!, $password: String!) {
+          login(username: $username, password: $password) {
+            token
+          }
+        }
+      `,
       { username, password },
-      db,
     );
+
     this.client = new GraphQLClient(this.host, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return token;
   }
 
   request(graphql, variables) {
@@ -61,6 +65,22 @@ class Server {
     return variables
       ? request(this.host, graphql, variables)
       : request(this.host, graphql);
+  }
+
+  static getError(msg) {
+    if (msg && msg.response && msg.response.errors) {
+      const {
+        response: { errors },
+      } = msg;
+
+      if (errors.length === 0) return '';
+
+      const error = errors[0].message.split(' ');
+
+      return error.length > 1 ? error[error.length - 1] : error[0];
+    }
+
+    return '';
   }
 }
 

@@ -10,9 +10,7 @@ describe('Meta', () => {
     await server.start();
   });
 
-  afterAll(() => {
-    server.stop();
-  });
+  afterAll(() => server.stop());
 
   test('Retrieve information', async () => {
     const { meta } = await server.request(

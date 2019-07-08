@@ -51,12 +51,15 @@ Object.values(models).forEach(model => {
 });
 
 module.exports = {
-  async connect({ onConnected, onSync }) {
+  async connect({ reset } = { reset: false }) {
     await sequelize.authenticate();
-    onConnected && onConnected(dialect);
+
+    if (reset) {
+      await sequelize.sync({ force: true });
+      return;
+    }
 
     await sequelize.sync();
-    onSync && onSync();
   },
   sequelize,
   models,

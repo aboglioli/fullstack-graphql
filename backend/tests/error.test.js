@@ -1,7 +1,7 @@
 const Server = require('./server');
 const errors = require('../src/errors');
 
-const errorsGql = `
+const ERRORS_QUERY = `
   query errors {
     errors {
       code
@@ -10,7 +10,7 @@ const errorsGql = `
   }
 `;
 
-const errorGql = `
+const ERROR_QUERY = `
   query error($code: String!) {
     error(code: $code) {
       code
@@ -30,7 +30,7 @@ describe('Error', () => {
   afterAll(() => server.stop());
 
   test('Get all errors', async () => {
-    const { errors: requestedErrors } = await server.request(errorsGql);
+    const { errors: requestedErrors } = await server.request(ERRORS_QUERY);
 
     requestedErrors.forEach(error => {
       expect(error).toHaveProperty('code');
@@ -40,7 +40,7 @@ describe('Error', () => {
   });
 
   test('Get error by code', async () => {
-    const { error } = await server.request(errorGql, {
+    const { error } = await server.request(ERROR_QUERY, {
       code: 'USER_EMAIL_INVALID',
     });
     expect(error.code).toBe('USER_EMAIL_INVALID');

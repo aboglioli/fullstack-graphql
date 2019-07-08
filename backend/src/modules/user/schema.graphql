@@ -3,7 +3,6 @@ type User {
   username: String!
   name: String!
   email: String!
-  validated: Boolean!
   createdAt: Date!
   updatedAt: Date!
 }
@@ -25,6 +24,6 @@ type Query {
 }
 
 type Mutation {
-  signup(data: UserCreateInput!): User!
+  signup(data: UserCreateInput!): AuthPayload!
   login(username: String!, password: String!): AuthPayload!
 }

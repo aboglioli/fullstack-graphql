@@ -1,4 +1,5 @@
 const startServer = require('./server');
+const { sequelizeDialect } = require('./config');
 const mongo = require('./db-mongo');
 const sequelize = require('./db-sequelize');
 const redis = require('./redis');
@@ -8,18 +9,19 @@ const redis = require('./redis');
   console.log('[SERVER] Running on', app.address());
 
   // Mongo
-  await mongo.connect({
-    onConnected: () => console.log('[MONGO] Connnected'),
-    onError: err => console.log('[MONGO] Error:', err),
-    onDisconnected: () => console.log('[MONGO] Disconnected'),
-  });
+  try {
+    await mongo.connect();
+    console.log('[MONGO] Connected');
+  } catch (err) {
+    console.log(`[MONGO] Error: ${err}`);
+  }
 
-  // Sequelize
-  await sequelize.connect({
-    onConnected: dialect =>
-      console.log(`[SEQUELIZE] Connected to ${dialect} instance`),
-    onSync: () => console.log('[SEQUELIZE] Synchronized'),
-  });
+  try {
+    await sequelize.connect();
+    console.log(`[SEQUELIZE] Connected to ${sequelizeDialect}`);
+  } catch (err) {
+    console.log(`[SEQUELIZE] Error: ${err}`);
+  }
 
   // redis
   redis && redis.connected && console.log('[REDIS] Connected');

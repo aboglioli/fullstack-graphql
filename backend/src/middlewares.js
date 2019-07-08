@@ -10,8 +10,7 @@ const isLoggedIn = (resolve, root, args, ctx, info) => {
 
 const loggedIn = applyMiddleware(
   {
-    Query: ['keyValue', 'keyValueExists', 'me'],
-    Mutation: ['setKeyValue', 'deleteKeyValue'],
+    Query: ['me'],
   },
   isLoggedIn,
 );

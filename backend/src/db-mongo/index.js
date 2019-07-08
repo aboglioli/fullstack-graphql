@@ -22,7 +22,7 @@ const models = fs
   }, {});
 
 module.exports = {
-  connect({ onConnected, onError, onDisconnected } = {}) {
+  async connect({ reset } = { reset: false }) {
     const {
       mongoHost: host,
       mongoPort: port,
@@ -35,26 +35,15 @@ module.exports = {
         ? `mongodb://${user}:${password}@${host}:${port}/${database}`
         : `mongodb://${host}:${port}/${database}`;
 
-    const connection = mongoose.connect(
-      `${connectionString}?authSource=admin`,
-      {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-      },
-    );
+    await mongoose.connect(`${connectionString}?authSource=admin`, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    });
 
-    onConnected &&
-      mongoose.connection.on('connected', () => {
-        onConnected(connectionString);
-      });
-    onError && mongoose.connection.on('error', onError);
-    onDisconnected && mongoose.connection.on('disconnected', onDisconnected);
-
-    return connection;
-  },
-  async reset() {
-    for (let model of models) {
-      await model.deleteMany();
+    if (reset) {
+      for (let model of Object.values(models)) {
+        await model.deleteMany();
+      }
     }
   },
   models,

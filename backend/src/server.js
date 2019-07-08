@@ -1,7 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
 const cors = require('cors');
 
-const config = require('./config');
+const { port } = require('./config');
 const context = require('./context');
 const schema = require('./modules');
 const middlewares = require('./middlewares');
@@ -14,4 +14,4 @@ const server = new GraphQLServer({
 
 server.express.use(cors());
 
-module.exports = () => server.start({ port: config.port });
+module.exports = () => server.start({ port });

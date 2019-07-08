@@ -1,19 +1,22 @@
 const Server = require('./server');
 const seeder = require('./seeder');
-const { getError } = require('./utils');
+const { getError } = Server;
 
-const signupGql = `
+const SIGNUP_MUTATION = `
   mutation signup($data: UserCreateInput!) {
     signup(data: $data) {
-      id
-      username
-      name
-      email
+      user {
+        id
+        username
+        name
+        email
+      }
+      token
     }
   }
 `;
 
-const loginGql = `
+const LOGIN_MUTATION = `
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       user {
@@ -27,13 +30,15 @@ const loginGql = `
   }
 `;
 
-const meGql = `
+const ME_QUERY = `
   query me {
     me {
       id
       username
       name
       email
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -51,7 +56,7 @@ describe('User', () => {
 
   test('Create user with invalid data', async () => {
     try {
-      await server.request(signupGql, {
+      await server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           username: 'adm',
@@ -62,7 +67,7 @@ describe('User', () => {
     }
 
     try {
-      await server.request(signupGql, {
+      await server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           name: 'Adm',
@@ -73,7 +78,7 @@ describe('User', () => {
     }
 
     try {
-      await server.request(signupGql, {
+      await server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           email: 'email.com',
@@ -84,7 +89,7 @@ describe('User', () => {
     }
 
     try {
-      await server.request(signupGql, {
+      await server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           email: 'a@a.com',
@@ -96,12 +101,37 @@ describe('User', () => {
   });
 
   test('Create user', async () => {
-    const { signup } = await server.request(signupGql, {
+    const { signup } = await server.request(SIGNUP_MUTATION, {
       data: seeder.user,
     });
+    const { user, token } = signup;
 
-    expect(signup.username).toBe(seeder.user.username);
-    expect(signup.name).toBe(seeder.user.name);
-    expect(signup.email).toBe(seeder.user.email);
+    expect(typeof token).toBe('string');
+    expect(user.username).toBe(seeder.user.username);
+    expect(user.name).toBe(seeder.user.name);
+    expect(user.email).toBe(seeder.user.email);
+  });
+
+  test('Login with new user', async () => {
+    const { login } = await server.request(LOGIN_MUTATION, {
+      username: seeder.user.username,
+      password: seeder.user.password,
+    });
+    const { user, token } = login;
+
+    expect(typeof token).toBe('string');
+    expect(user.username).toBe(seeder.user.username);
+    expect(user.name).toBe(seeder.user.name);
+    expect(user.email).toBe(seeder.user.email);
+  });
+
+  test('Query "me"', async () => {
+    await server.login('user', '123456');
+    const { user } = await server.client.request(ME_QUERY);
+
+    expect(typeof token).toBe('string');
+    expect(user.username).toBe(seeder.user.username);
+    expect(user.name).toBe(seeder.user.name);
+    expect(user.email).toBe(seeder.user.email);
   });
 });
