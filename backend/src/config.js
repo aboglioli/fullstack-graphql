@@ -4,7 +4,7 @@ const mergeConfig = (env1, env2) => ({ ...env1, ...env2 });
 
 const config = {
   development: {
-    logging: true,
+    logging: false,
     port: process.env.APP_PORT,
     jwtSecret: process.env.JWT_SECRET,
 
@@ -14,7 +14,7 @@ const config = {
     mongoUser: process.env.MONGO_USER,
     mongoPassword: process.env.MONGO_PASSWORD,
 
-    sequelizeDialect: 'postgres',
+    sequelizeDialect: process.env.SEQUELIZE_DIALECT,
     sequelizeHost: process.env.SEQUELIZE_HOST,
     sequelizePort: process.env.SEQUELIZE_PORT,
     sequelizeDatabase: process.env.SEQUELIZE_DATABASE,
@@ -30,7 +30,6 @@ const config = {
     jwtSecret: 'my-secret',
     mongoDatabase: `${process.env.MONGO_DATABASE}-test`,
     sequelizeDialect: 'sqlite',
-    sequelizeStorage: ':memory:',
     sequelizeDatabase: `${process.env.SEQUELIZE_DATABASE}-test`,
     mockRedis: true,
   },

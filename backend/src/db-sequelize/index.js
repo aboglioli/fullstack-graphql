@@ -6,19 +6,20 @@ const basename = path.basename(__filename);
 const config = require('../config');
 
 const {
+  logging,
   sequelizeHost: host,
   sequelizePort: port,
   sequelizeDatabase: database,
   sequelizeUser: username,
   sequelizePassword: password,
+  sequelizeDialect: dialect,
 } = config;
 
 const sequelize = new Sequelize(database, username, password, {
   host,
   port,
-  database,
-  username,
-  password,
+  dialect,
+  logging,
 });
 
 const models = fs
@@ -41,7 +42,7 @@ const models = fs
       ...models,
       [model.name]: model,
     };
-  });
+  }, {});
 
 Object.values(models).forEach(model => {
   if (model.associate) {
@@ -52,7 +53,7 @@ Object.values(models).forEach(model => {
 module.exports = {
   async connect({ onConnected, onSync }) {
     await sequelize.authenticate();
-    onConnected && onConnected();
+    onConnected && onConnected(dialect);
 
     await sequelize.sync();
     onSync && onSync();

@@ -16,7 +16,8 @@ const redis = require('./redis');
 
   // Sequelize
   await sequelize.connect({
-    onConnected: () => console.log('[SEQUELIZE] Connected'),
+    onConnected: dialect =>
+      console.log(`[SEQUELIZE] Connected to ${dialect} instance`),
     onSync: () => console.log('[SEQUELIZE] Synchronized'),
   });
 
