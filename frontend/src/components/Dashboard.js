@@ -2,18 +2,34 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import PrivateRoute from '../utils/PrivateRoute';
-import Home from './Home';
-import Login from './Login';
-import Meta from './Meta';
-import NotFound from './NotFound';
+import NotFound from '../NotFound';
+import routes from '../routes';
 
 const Dashboard = () => {
   return (
     <main>
       <Switch>
-        <PrivateRoute exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/meta" component={Meta} />
+        {routes.map((route, i) =>
+          route.private ? (
+            <PrivateRoute
+              key={i}
+              exact={route.exact}
+              path={route.path}
+              render={props => (
+                <route.component {...props} routes={route.routes} />
+              )}
+            />
+          ) : (
+            <Route
+              key={i}
+              exact={route.exact}
+              path={route.path}
+              render={props => (
+                <route.component {...props} routes={route.routes} />
+              )}
+            />
+          ),
+        )}
         <Route component={NotFound} />
       </Switch>
     </main>
