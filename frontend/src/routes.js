@@ -1,9 +1,9 @@
-import Dashboard from './Dashboard';
-import Login from './Login';
-import Home from './ProtectedPage';
-import Page2 from './ProtectedPage';
-import Meta from './Meta';
-import NotFound from './NotFound';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Home from './pages/ProtectedPage';
+import Page2 from './pages/ProtectedPage';
+import Meta from './pages/Meta';
+import NotFound from './pages/NotFound';
 
 let routes = [
   {

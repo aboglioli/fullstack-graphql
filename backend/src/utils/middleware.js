@@ -1,25 +1,21 @@
-const applyMiddleware = ({ Query, Mutation }, middleware) => {
-  Query = Query
-    ? Query.reduce(
+const applyMiddleware = (middleware, types) => {
+  return Object.entries(types).reduce(
+    (obj, [type, resolvers]) => ({
+      ...obj,
+      [type]: resolvers.reduce(
         (obj, resolver) => ({
           ...obj,
           [resolver]: middleware,
         }),
         {},
-      )
-    : [];
-
-  Mutation = Mutation
-    ? Mutation.reduce(
-        (obj, resolver) => ({
-          ...obj,
-          [resolver]: middleware,
-        }),
-        {},
-      )
-    : [];
-
-  return { Query, Mutation };
+      ),
+    }),
+    {},
+  );
 };
 
-module.exports = { applyMiddleware };
+const applyMiddlewares = (middlewares, types) => {
+  return middlewares.map(middleware => applyMiddleware(middleware, types));
+};
+
+module.exports = { applyMiddleware, applyMiddlewares };

@@ -8,11 +8,19 @@ const isLoggedIn = (resolve, root, args, ctx, info) => {
   return resolve(root, args, ctx, info);
 };
 
-const loggedIn = applyMiddleware(
-  {
-    Query: ['me'],
-  },
-  isLoggedIn,
-);
+const hasRole = role => async (resolve, root, args, ctx, info) => {
+  const { user: loggedInUser, models } = ctx;
+  const user = await models.User.findById(loggedInUser.id);
 
-module.exports = [loggedIn];
+  if (user.role !== role) {
+    throw new Error('USER_HAS_NOT_PERMISSIONS');
+  }
+
+  return resolve(root, args, ctx, info);
+};
+
+module.exports = [
+  applyMiddleware(isLoggedIn, {
+    Query: ['me'],
+  }),
+];

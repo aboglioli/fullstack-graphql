@@ -84,6 +84,14 @@ class Server {
 
     return '';
   }
+
+  static async checkError(promise, expectedError) {
+    try {
+      await promise;
+    } catch (err) {
+      expect(Server.getError(err)).toBe(expectedError);
+    }
+  }
 }
 
 module.exports = Server;

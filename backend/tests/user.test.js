@@ -1,7 +1,7 @@
 const Server = require('./server');
 const seeder = require('./seeder');
 const { models } = require('../src/db-mongo');
-const { getError } = Server;
+const { checkError } = Server;
 
 const SIGNUP_MUTATION = `
   mutation signup($data: UserCreateInput!) {
@@ -56,49 +56,45 @@ describe('User', () => {
   afterAll(() => server.stop());
 
   test('Create user with invalid data', async () => {
-    try {
-      await server.request(SIGNUP_MUTATION, {
+    await checkError(
+      server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           username: 'adm',
         },
-      });
-    } catch (err) {
-      expect(getError(err)).toBe('USER_INVALID');
-    }
+      }),
+      'USER_INVALID',
+    );
 
-    try {
-      await server.request(SIGNUP_MUTATION, {
+    await checkError(
+      server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           name: 'Adm',
         },
-      });
-    } catch (err) {
-      expect(getError(err)).toBe('USER_NAME_INVALID');
-    }
+      }),
+      'USER_NAME_INVALID',
+    );
 
-    try {
-      await server.request(SIGNUP_MUTATION, {
+    await checkError(
+      server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           email: 'email.com',
         },
-      });
-    } catch (err) {
-      expect(getError(err)).toBe('USER_EMAIL_INVALID');
-    }
+      }),
+      'USER_EMAIL_INVALID',
+    );
 
-    try {
-      await server.request(SIGNUP_MUTATION, {
+    await checkError(
+      server.request(SIGNUP_MUTATION, {
         data: {
           ...seeder.user,
           email: 'a@a.com',
         },
-      });
-    } catch (err) {
-      expect(getError(err)).toBe('USER_EMAIL_INVALID');
-    }
+      }),
+      'USER_EMAIL_INVALID',
+    );
   });
 
   test('Create user', async () => {
@@ -144,5 +140,9 @@ describe('User', () => {
     expect(me.username).toBe(seeder.user.username);
     expect(me.name).toBe(seeder.user.name);
     expect(me.email).toBe(seeder.user.email);
+  });
+
+  test('Query "me" with not logged in user', async () => {
+    await checkError(server.request(ME_QUERY), 'NOT_LOGGED_IN');
   });
 });
