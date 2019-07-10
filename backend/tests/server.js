@@ -18,9 +18,11 @@ class Server {
   }
 
   stop() {
-    if (this.app) {
-      this.app.close();
-    }
+    if (this.app) this.app.close();
+
+    if (this.mongoConnection) this.mongoConnection.close();
+
+    if (this.sequelizeConnection) this.sequelizeConnection.close();
   }
 
   async connectDb(prefix = '') {
@@ -30,8 +32,8 @@ class Server {
     }
 
     // Reset DBs
-    await mongo.connect({ reset: true });
-    await sequelize.connect({ reset: true });
+    this.mongoConnection = await mongo.connect({ reset: true });
+    this.sequelizeConnection = await sequelize.connect({ reset: true });
   }
 
   async login(username, password) {

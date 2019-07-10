@@ -35,16 +35,21 @@ module.exports = {
         ? `mongodb://${user}:${password}@${host}:${port}/${database}`
         : `mongodb://${host}:${port}/${database}`;
 
-    await mongoose.connect(`${connectionString}?authSource=admin`, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-    });
+    const connection = await mongoose.connect(
+      `${connectionString}?authSource=admin`,
+      {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+      },
+    );
 
     if (reset) {
       for (let model of Object.values(models)) {
         await model.deleteMany();
       }
     }
+
+    return connection;
   },
   models,
 };

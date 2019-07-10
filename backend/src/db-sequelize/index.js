@@ -60,6 +60,8 @@ module.exports = {
     }
 
     await sequelize.sync();
+
+    return sequelize;
   },
   sequelize,
   models,
