@@ -3,6 +3,8 @@ type User {
   username: String!
   name: String!
   email: String!
+  active: Boolean @isAuth(role: ADMIN)
+  validated: Boolean @isAuth(role: ADMIN)
   createdAt: Date!
   updatedAt: Date!
 }
@@ -20,7 +22,7 @@ type AuthPayload {
 }
 
 type Query {
-  me: User!
+  me: User! @isAuth
 }
 
 type Mutation {

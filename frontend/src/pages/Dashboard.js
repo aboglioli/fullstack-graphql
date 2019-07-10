@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Nav from './Nav';
-import Routes from './utils/Routes';
+import Nav from '../components/Nav';
+import Routes from '../utils/Routes';
 
 const Dashboard = ({ routes }) => {
   return (
