@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Nav from '../components/Nav';
+// import Nav from '../components/Nav';
 import Routes from '../utils/Routes';
+import SideBar from '../components/SideBar';
 
 const Dashboard = ({ routes }) => {
   return (
-    <main>
-      <h2>Dashboard</h2>
-      <Nav />
-      <Routes routes={routes} />
-    </main>
+    <>
+      <SideBar>
+        <ul>
+          <li>Primer link</li>
+          <li>Segundo link</li>
+          <li>Tercer link</li>
+        </ul>
+      </SideBar>
+      <main>
+        <Routes routes={routes} />
+      </main>
+    </>
   );
 };
 

@@ -1,9 +1,8 @@
+import config from './config';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
-import Home from './pages/ProtectedPage';
-import Page2 from './pages/ProtectedPage';
+import ProtectedPage from './pages/ProtectedPage';
 import Meta from './pages/Meta';
-import NotFound from './pages/NotFound';
 
 let routes = [
   {
@@ -12,26 +11,22 @@ let routes = [
   },
   {
     path: '/',
-    private: true,
+    private: config.authEnabled,
     component: Dashboard,
     routes: [
       {
-        path: '/home',
-        private: true,
-        component: Home,
-      },
-      {
-        path: '/page2',
-        private: true,
-        component: Page2,
+        path: '/page1',
+        private: config.authEnabled,
+        component: ProtectedPage,
       },
       {
         path: '/meta',
-        private: true,
+        private: config.authEnabled,
         component: Meta,
       },
       {
-        component: NotFound,
+        private: config.authEnabled,
+        component: ProtectedPage,
       },
     ],
   },
