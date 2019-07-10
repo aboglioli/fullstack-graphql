@@ -4,17 +4,15 @@ const { resolver } = require('graphql-sequelize');
 const { models, sequelize } = require('./db');
 const { getUser } = require('./utils/user');
 
-resolver.contextTopOptions = { [EXPECTED_OPTIONS_KEY]: EXPECTED_OPTIONS_KEY };
+resolver.contextToOptions = { [EXPECTED_OPTIONS_KEY]: EXPECTED_OPTIONS_KEY };
 
 module.exports = ({ request }) => {
   let ctx = {};
 
   // Create DataLoader for each request
   if (sequelize) {
-    const dataloaderContext = createContext(sequelize);
-
     ctx = {
-      [EXPECTED_OPTIONS_KEY]: dataloaderContext,
+      [EXPECTED_OPTIONS_KEY]: createContext(sequelize),
     };
   }
 
