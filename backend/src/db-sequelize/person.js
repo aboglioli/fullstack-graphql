@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-class User extends Sequelize.Model {
+class Person extends Sequelize.Model {
   static init(sequelize) {
     return super.init(schema, { sequelize });
   }
@@ -60,4 +60,4 @@ const schema = {
   },
 };
 
-module.exports = User;
+module.exports = Person;

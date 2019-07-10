@@ -110,7 +110,7 @@ describe('User', () => {
   });
 
   test('User not validated after creation', async () => {
-    const user = await models.MongoUser.findOne({
+    const user = await models.User.findOne({
       username: seeder.user.username,
     });
     expect(user.validated).toBe(false);

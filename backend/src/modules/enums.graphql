@@ -1,1 +1,6 @@
 scalar Date
+
+enum Role {
+  ADMIN
+  USER
+}

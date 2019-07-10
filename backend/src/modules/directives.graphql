@@ -1,0 +1,3 @@
+directive @isAuth(
+  role: Role = USER
+) on FIELD_DEFINITION
