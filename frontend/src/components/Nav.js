@@ -1,20 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Nav.css';
 
-const Nav = () => {
+const Nav = ({ ...props }) => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/home">Home</Link>
-        </li>
-        <li>
-          <Link to="/page2">Page 2</Link>
-        </li>
-        <li>
-          <Link to="/meta">Meta</Link>
-        </li>
-      </ul>
+    <nav className="nav" {...props}>
+      Asd
     </nav>
   );
 };

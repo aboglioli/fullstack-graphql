@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Dashboard.css';
 
-// import Nav from '../components/Nav';
 import Routes from '../utils/Routes';
 import Sidebar from '../components/Sidebar';
 
@@ -28,7 +27,7 @@ const sidebarItems = [
 const Dashboard = ({ routes }) => {
   return (
     <div className="container">
-      <Sidebar id="sidebar" items={sidebarItems} />
+      <Sidebar id="sidebar" items={sidebarItems} header="Header" />
       <main id="main">
         <div className="content">
           <Routes routes={routes} />
