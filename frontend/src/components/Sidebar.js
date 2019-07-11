@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import './Sidebar.css';
 
 const SidebarSection = ({ section, items }) => {
@@ -38,7 +39,7 @@ const Sidebar = ({ items, header, ...props }) => {
       <div className="sidebar__header">
         {header}
         <button className="sidebar__button" onClick={() => setOpen(!open)}>
-          x
+          X
         </button>
       </div>
       <div className="sidebar__content">

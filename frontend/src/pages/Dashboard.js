@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Dashboard.css';
 
 import Routes from '../utils/Routes';
 import Sidebar from '../components/Sidebar';
+import './Dashboard.css';
 
 const sidebarItems = [
   {
     section: 'Products',
     items: [
-      { text: 'Create product', link: '#' },
-      { text: 'Product list', link: '#', className: 'active' },
-      { text: 'Stock', link: '#' },
+      { text: 'Create Product', link: '/page1' },
+      { text: 'Product List', link: '/meta', className: 'active' },
+      { text: 'Stock', link: '/asd' },
     ],
   },
   {
     section: 'Providers',
     items: [
-      { text: 'Add provider', link: '#' },
-      { text: 'Add quotation', link: '#' },
-      { text: 'Compare quotations', link: '#' },
+      { text: 'Add Provider', link: '/asd' },
+      { text: 'Add Quotation', link: '/asd' },
+      { text: 'Compare Quotations', link: '/asd' },
     ],
   },
 ];

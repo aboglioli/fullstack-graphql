@@ -1,5 +1,12 @@
 import React from 'react';
 
-const ProtectedPage = () => <b>Protected page</b>;
+import Box from '../components/core/Box';
+
+const ProtectedPage = () => (
+  <>
+    <h1>Example page</h1>
+    <Box>Protected page</Box>
+  </>
+);
 
 export default ProtectedPage;

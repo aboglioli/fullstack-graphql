@@ -1,6 +1,7 @@
 import config from './config';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 import ProtectedPage from './pages/ProtectedPage';
 import Meta from './pages/Meta';
 
@@ -26,7 +27,7 @@ let routes = [
       },
       {
         private: config.authEnabled,
-        component: ProtectedPage,
+        component: NotFound,
       },
     ],
   },
