@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './Layout.css';
 
 const Layout = ({ logo, toolbar, sidebar, children, footer }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
   return (
     <div className="container">
-      <header className="header">
-        <div className="logo">{logo}</div>
-        <nav className="toolbar">{toolbar}</nav>
+      <header className="toolbar">
+        <button class="toolbar__closebtn" onClick={() => setSidebarOpen(!sidebarOpen)}>☰</button>
+        {toolbar}
       </header>
-      <nav className="sidebar">{sidebar}</nav>
+      <nav className={`sidebar ${sidebarOpen ? '' : 'sidebar--closed'}`}>
+        <div className="logo">{logo}</div>
+        {sidebar}
+      </nav>
       <main className="main">
         <div className="content">{children}</div>
       </main>
