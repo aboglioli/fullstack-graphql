@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    background-color: var(--sidebar-background);
+    flex: 0 0 var(--sidebar-width);
+    flex-flow: row wrap;
+    overflow: auto;
+}
+
+#main {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    overflow: auto;
+    padding: 1rem;
+}
+
+#main .content {
+    border: 1px solid black; /* TODO: remove */
+    max-width: var(--content-width);
+    width: var(--content-width);
+}

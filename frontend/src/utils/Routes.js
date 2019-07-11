@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
 const Routes = ({ routes }) => {
-  console.log(routes);
   return (
     <Switch>
       {routes.map((route, i) =>
