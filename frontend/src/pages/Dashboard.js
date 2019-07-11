@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Routes from '../utils/Routes';
+import Toolbar from '../components/Toolbar';
 import Sidebar from '../components/Sidebar';
-import './Dashboard.css';
+import Layout from '../components/Layout';
 
 const sidebarItems = [
   {
@@ -26,14 +27,14 @@ const sidebarItems = [
 
 const Dashboard = ({ routes }) => {
   return (
-    <div className="container">
-      <Sidebar id="sidebar" items={sidebarItems} header="Header" />
-      <main id="main">
-        <div className="content">
-          <Routes routes={routes} />
-        </div>
-      </main>
-    </div>
+    <Layout
+      logo="fullstack-graphql"
+      toolbar={<Toolbar />}
+      sidebar={<Sidebar items={sidebarItems} />}
+      footer="Footer"
+    >
+      <Routes routes={routes} />
+    </Layout>
   );
 };
 

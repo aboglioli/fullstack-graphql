@@ -4,11 +4,7 @@ import PropTypes from 'prop-types';
 import './Box.css';
 
 const Box = ({ children }) => {
-  return (
-    <div className="box">
-      {children}
-    </div>
-  );
+  return <div className="box">{children}</div>;
 };
 
 Box.propTypes = {
