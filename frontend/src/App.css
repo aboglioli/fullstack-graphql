@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Dosis|Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
 body {
     background-color: #fff;
     color: #676767;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 16px;
     margin: 0 auto;
 
@@ -23,7 +23,6 @@ body {
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Dosis', 'Montserrat', sans-serif;
     margin: 0;
 }
 

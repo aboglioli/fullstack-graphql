@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Layout.css';
 
@@ -9,7 +10,12 @@ const Layout = ({ logo, toolbar, sidebar, children, footer }) => {
   return (
     <div className="container">
       <header className="toolbar">
-        <button className="toolbar__closebtn" onClick={() => setSidebarOpen(!sidebarOpen)}>☰</button>
+        <button
+          className="toolbar__closebtn"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <FontAwesomeIcon icon="bars" />
+        </button>
         {toolbar}
       </header>
       <nav className={`sidebar ${sidebarOpen ? '' : 'sidebar--closed'}`}>

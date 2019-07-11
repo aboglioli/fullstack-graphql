@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Sidebar.css';
 
@@ -9,12 +10,14 @@ const SidebarSection = ({ section, items }) => {
   return (
     <div className="sidebar__section">
       <h5 className="sidebar__section__title" onClick={() => setOpen(!open)}>
-        {section}
-        {open ? (
-          <span style={{ float: 'right' }}>↑</span>
-        ) : (
-          <span style={{ float: 'right' }}>»</span>
-        )}
+        <span>{section}</span>
+        <span>
+          {open ? (
+            <FontAwesomeIcon icon="chevron-circle-up" />
+          ) : (
+            <FontAwesomeIcon icon="chevron-circle-down" />
+          )}
+        </span>
       </h5>
       <ul
         className={`sidebar__section__items ${

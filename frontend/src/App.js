@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import './icons';
 import routes from './routes';
 import Routes from './utils/Routes';
 

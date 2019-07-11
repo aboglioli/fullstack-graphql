@@ -8,9 +8,13 @@
 .sidebar__section__title {
     color: #677694;
     cursor: pointer;
+    font-size: 0.8rem;
+    letter-spacing: 0.06rem;
     margin: 0;
     padding: 20px 20px 10px;
     text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
 }
 
 .sidebar__section__items {
@@ -19,7 +23,7 @@
 }
 
 .sidebar__section__items--closed {
-    display: none
+    display: none;
 }
 
 .sidebar__section__item {
@@ -30,13 +34,13 @@
 
 .sidebar__section__item > a {
     color: #fff;
-    font-weight: 400;
-    font-size: 0.8rem;
-    text-decoration: none;
-    width: 100%;
-    padding: 10px 20px;
     display: flex;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 10px 20px;
+    text-decoration: none;
     transition: 1s;
+    width: 100%;
 }
 
 .sidebar__section__item > a.active {

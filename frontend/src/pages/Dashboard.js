@@ -10,8 +10,8 @@ const sidebarItems = [
   {
     section: 'Products',
     items: [
-      { text: 'Create Product', link: '/page1' },
-      { text: 'Product List', link: '/meta', className: 'active' },
+      { text: 'Create Product', link: '/page1', className: 'active' },
+      { text: 'Product List', link: '/meta' },
       { text: 'Stock', link: '/asd' },
     ],
   },
