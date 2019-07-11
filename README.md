@@ -20,5 +20,10 @@ modules (*GraphQL schemas and resolvers*) easily.
 
 ## Frontend
 
-- **React**: UI library.
+- **React**: UI library. With hooks support!
 - **react-apollo**: GraphQL library for React.
+- **react-router**.
+- **FontAwesome**: for icons.
+- **Basic dashboard structure**: made with CSS Grid, FontAwesome and react-router.
+
+![Dashboard](docs/dashboard.png)

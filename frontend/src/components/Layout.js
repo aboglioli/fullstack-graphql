@@ -25,7 +25,7 @@ const Layout = ({ logo, toolbar, sidebar, children, footer }) => {
       <main className="main">
         <div className="content">{children}</div>
       </main>
-      {footer && <footer className="footer">Footer</footer>}
+      <footer className="footer">{footer}</footer>
     </div>
   );
 };

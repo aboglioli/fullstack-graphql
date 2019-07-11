@@ -31,7 +31,7 @@ const Dashboard = ({ routes }) => {
       logo="fullstack-graphql"
       toolbar={<Toolbar />}
       sidebar={<Sidebar items={sidebarItems} />}
-      footer="Footer"
+      footer={<div style={{ textAlign: 'center', padding: '5px 0' }}>Copyright © 2019 - Alan Boglioli</div>}
     >
       <Routes routes={routes} />
     </Layout>
