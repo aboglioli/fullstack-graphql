@@ -6,9 +6,6 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     margin: 0 auto;
-    --content-width: 1200px;
-    --sidebar-background: #031b4d;
-    --sidebar-width: 250px;
 }
 
 * {
