@@ -10,6 +10,11 @@ const SidebarSection = ({ section, items }) => {
     <div className="sidebar__section">
       <h5 className="sidebar__section__title" onClick={() => setOpen(!open)}>
         {section}
+        {open ? (
+          <span style={{ float: 'right' }}>↑</span>
+        ) : (
+          <span style={{ float: 'right' }}>»</span>
+        )}
       </h5>
       <ul
         className={`sidebar__section__items ${

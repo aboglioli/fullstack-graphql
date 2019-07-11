@@ -36,10 +36,7 @@
     width: 100%;
     padding: 10px 20px;
     display: flex;
-}
-
-.sidebar__section__item > a:hover {
-    background-color: var(--sidebar-item-hover-background);
+    transition: 1s;
 }
 
 .sidebar__section__item > a.active {
@@ -47,59 +44,7 @@
     font-weight: 700;
 }
 
-
-/* Old */
-
-.menu_button {
-  display: inline-block;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  position: relative;
-  left: 310px;
-  top: 20px;
-  width: 35px;
-  height: 35px;
-  background-color: transparent;
-  animation: heart 10s linear 0s infinite;
+.sidebar__section__item > a:hover {
+    background-color: var(--sidebar-item-hover-background);
 }
 
-@keyframes heart {
-  0% {transform: scale(1)}
-  92% {transform: scale(1)}
-  94% {transform: scale(1.2)}
-  96% {transform: scale(1)}
-  98% {transform: scale(1.2)}
-  100% {transform: scale(1)}
-}
-
-.close1, .close2 {
-  width: 30px;
-  height: 6px;
-  border-radius: 5px;
-  background-color: rgba(51, 51, 51, 0.2);
-  margin: 4px 0;
-  transition: 0.7s;
-}
-
-.open1, .open2 {
-  width: 30px;
-  height: 6px;
-  border-radius: 5px;
-  background-color: rgba(51, 51, 51, 0.2);
-  margin: 4px 0;
-  transition: 0.7s;
-}
-
-.open1:hover, .open2:hover, .close1:hover, .close2:hover {
-  transition: 0.7s;
-  background-color: rgb(200, 60, 60);
-}
-
-.open1 {
-  transform: rotate(-45deg) translate(-3px, 3px)
-}
-
-.open2 {
-  transform: rotate(45deg) translate(-4px, -5px)
-}

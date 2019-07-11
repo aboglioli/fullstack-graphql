@@ -9,7 +9,7 @@ const Layout = ({ logo, toolbar, sidebar, children, footer }) => {
   return (
     <div className="container">
       <header className="toolbar">
-        <button class="toolbar__closebtn" onClick={() => setSidebarOpen(!sidebarOpen)}>☰</button>
+        <button className="toolbar__closebtn" onClick={() => setSidebarOpen(!sidebarOpen)}>☰</button>
         {toolbar}
       </header>
       <nav className={`sidebar ${sidebarOpen ? '' : 'sidebar--closed'}`}>

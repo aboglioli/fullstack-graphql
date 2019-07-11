@@ -18,14 +18,19 @@
 }
 
 .toolbar__closebtn {
-    cursor: pointer;
     background: transparent;
     border: none;
+    cursor: pointer;
     font-weight: 700;
     height: 100%;
     margin-right: 1rem;
     outline: none;
+    transition: 0.5s;
     width: 37px;
+}
+
+.toolbar__closebtn:hover {
+    transform: scale(1.2);
 }
 
 .sidebar {
