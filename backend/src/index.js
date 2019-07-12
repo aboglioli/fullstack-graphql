@@ -3,17 +3,20 @@ const db = require('./db');
 const redis = require('./redis');
 
 (async () => {
-  const app = await startServer();
-  console.log('[SERVER] Running on', app.address());
-
   // Connect to DBs
   try {
-    await db.connect();
-    console.log('[DATABASE] Connected');
+    const connectedDbs = await db.connect();
+    console.log(
+      '[DATABASE] Connected:',
+      connectedDbs.map(db => db.toUpperCase()).join(', '),
+    );
   } catch (err) {
     console.log(`[DATABASE] Error: ${err}`);
   }
 
   // redis
   redis && redis.connected && console.log('[REDIS] Connected');
+
+  const app = await startServer();
+  console.log('[SERVER] Running on', app.address());
 })();
