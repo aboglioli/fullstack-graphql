@@ -15,7 +15,7 @@ services:
     ports:
       - "${REDIS_COMMANDER_PORT:-8082}:8081"
     environment:
-      REDIS_HOSTS: label:redis:${REDIS_PORT}
+      REDIS_HOSTS: local:redis:${REDIS_PORT}
     networks:
       - redis
 

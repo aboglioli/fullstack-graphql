@@ -5,9 +5,9 @@ const db = require('../src/db');
 const startServer = require('../src/server');
 
 // mock redis
-if (config.mockRedis) {
-  jest.mock('../src/redis', () => require('redis-mock').createClient());
-}
+// if (config.mockRedis) {
+//   jest.mock('../src/redis', () => require('redis-mock').createClient());
+// }
 
 class Server {
   async start() {

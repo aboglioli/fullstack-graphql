@@ -1,7 +1,7 @@
 const { useMongo, useSequelize } = require('./config');
 const mongo = require('./db-mongo');
 const sequelize = require('./db-sequelize');
-const KeyValue = require('./utils/key-value');
+const Redis = require('./redis');
 
 module.exports = {
   async connect({ reset } = { reset: false }) {
@@ -18,12 +18,16 @@ module.exports = {
       dbs.push({ name: 'sequelize', connection });
     }
 
+    if (reset) {
+      await Redis.flushall();
+    }
+
     return dbs;
   },
   sequelize: sequelize.sequelize, // comment this to ignore Sequelize
   models: {
     ...mongo.models,
     ...sequelize.models,
-    KeyValue,
+    Redis,
   },
 };

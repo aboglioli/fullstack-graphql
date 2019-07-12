@@ -1,5 +1,5 @@
-const redis = require('redis');
+const Redis = require('ioredis');
 
 const config = require('./config');
 
-module.exports = redis.createClient(config.redisPort, config.redisHost);
+module.exports = new Redis(config.redisPort, config.redisHost);
