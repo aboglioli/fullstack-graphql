@@ -1,7 +1,8 @@
+const gql = require('graphql-tag');
 const Server = require('./server');
 const errors = require('../src/errors');
 
-const ERRORS_QUERY = `
+const ERRORS_QUERY = gql`
   query errors {
     errors {
       code
@@ -10,7 +11,7 @@ const ERRORS_QUERY = `
   }
 `;
 
-const ERROR_QUERY = `
+const ERROR_QUERY = gql`
   query error($code: String!) {
     error(code: $code) {
       code

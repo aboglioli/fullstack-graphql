@@ -9,22 +9,29 @@ module.exports = {
 
     if (useMongo) {
       const connection = await mongo.connect({ reset });
-      dbs.push({ name: 'mongo', connection });
+      dbs.push({ name: 'Mongo', connection });
     }
 
     if (useSequelize) {
       const connection = await sequelize.connect({ reset });
 
-      dbs.push({ name: 'sequelize', connection });
+      dbs.push({ name: 'Sequelize', connection });
     }
 
     if (reset) {
       await Redis.flushall();
     }
 
+    dbs.push({
+      name: 'Redis',
+      connection: {
+        close: () => Redis.disconnect(),
+      },
+    });
+
     return dbs;
   },
-  sequelize: sequelize.sequelize, // comment this to ignore Sequelize
+  sequelize: sequelize.sequelize,
   models: {
     ...mongo.models,
     ...sequelize.models,

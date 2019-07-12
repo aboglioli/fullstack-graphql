@@ -2,6 +2,7 @@ const pkg = require('../../../package.json');
 
 module.exports = {
   Query: {
+    health: () => true,
     meta() {
       return {
         version: pkg.version,

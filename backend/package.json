@@ -42,6 +42,7 @@
     "eslint-plugin-jest": "^22.6.4",
     "eslint-plugin-prettier": "^3.1.0",
     "graphql-cli": "^3.0.11",
+    "graphql-tag": "^2.10.1",
     "ioredis-mock": "^4.12.1",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",

@@ -1,9 +1,10 @@
+const gql = require('graphql-tag');
 const Server = require('./server');
 const seeder = require('./seeder');
 const { models } = require('../src/db');
 const { checkError } = Server;
 
-const SIGNUP_MUTATION = `
+const SIGNUP_MUTATION = gql`
   mutation signup($data: UserCreateInput!) {
     signup(data: $data) {
       user {
@@ -17,7 +18,7 @@ const SIGNUP_MUTATION = `
   }
 `;
 
-const LOGIN_MUTATION = `
+const LOGIN_MUTATION = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       user {
@@ -31,7 +32,7 @@ const LOGIN_MUTATION = `
   }
 `;
 
-const ME_QUERY = `
+const ME_QUERY = gql`
   query me {
     me {
       id
@@ -144,8 +145,5 @@ describe('User', () => {
 
   test('Query "me" with not logged in user', async () => {
     await checkError(server.request(ME_QUERY), 'NOT_LOGGED_IN');
-
-    await models.Redis.set('hello', Math.random());
-    console.log(await models.Redis.get('hello'));
   });
 });
