@@ -144,5 +144,8 @@ describe('User', () => {
 
   test('Query "me" with not logged in user', async () => {
     await checkError(server.request(ME_QUERY), 'NOT_LOGGED_IN');
+
+    await models.Redis.set('hello', Math.random());
+    console.log(await models.Redis.get('hello'));
   });
 });
