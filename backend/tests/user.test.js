@@ -1,6 +1,6 @@
 const Server = require('./server');
 const seeder = require('./seeder');
-const { models } = require('../src/db-mongo');
+const { models } = require('../src/db');
 const { checkError } = Server;
 
 const SIGNUP_MUTATION = `

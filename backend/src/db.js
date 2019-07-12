@@ -1,6 +1,7 @@
 const { useMongo, useSequelize } = require('./config');
 const mongo = require('./db-mongo');
 const sequelize = require('./db-sequelize');
+const KeyValue = require('./utils/key-value');
 
 module.exports = {
   async connect({ reset } = { reset: false }) {
@@ -23,5 +24,6 @@ module.exports = {
   models: {
     ...mongo.models,
     ...sequelize.models,
+    KeyValue,
   },
 };
