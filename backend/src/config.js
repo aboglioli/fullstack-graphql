@@ -15,7 +15,7 @@ const config = {
     mongoUser: process.env.MONGO_USER,
     mongoPassword: process.env.MONGO_PASSWORD,
 
-    useSequelize: true,
+    useSequelize: false,
     sequelizeDialect: process.env.SEQUELIZE_DIALECT,
     sequelizeHost: process.env.SEQUELIZE_HOST,
     sequelizePort: process.env.SEQUELIZE_PORT,

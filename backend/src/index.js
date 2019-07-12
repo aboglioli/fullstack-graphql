@@ -7,8 +7,8 @@ const redis = require('./redis');
   try {
     const connectedDbs = await db.connect();
     console.log(
-      '[DATABASE] Connected:',
-      connectedDbs.map(db => db.toUpperCase()).join(', '),
+      '[DATABASE] Connected to:',
+      connectedDbs.map(db => db.name).map(db => db.toUpperCase()).join(', '),
     );
   } catch (err) {
     console.log(`[DATABASE] Error: ${err}`);

@@ -1,8 +1,7 @@
 const { GraphQLClient, request } = require('graphql-request');
 
 const config = require('../src/config');
-const mongo = require('../src/db-mongo');
-const sequelize = require('../src/db-sequelize');
+const db = require('../src/db');
 const startServer = require('../src/server');
 
 // mock redis
@@ -20,9 +19,9 @@ class Server {
   stop() {
     if (this.app) this.app.close();
 
-    if (this.mongoConnection) this.mongoConnection.close();
-
-    if (this.sequelizeConnection) this.sequelizeConnection.close();
+    if (this.dbs && this.dbs.length > 0) {
+      this.dbs.forEach(db => db.connection.close());
+    }
   }
 
   async connectDb(prefix = '') {
@@ -32,8 +31,7 @@ class Server {
     }
 
     // Reset DBs
-    this.mongoConnection = await mongo.connect({ reset: true });
-    this.sequelizeConnection = await sequelize.connect({ reset: true });
+    this.dbs = await db.connect({ reset: true });
   }
 
   async login(username, password) {

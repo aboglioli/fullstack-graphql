@@ -7,13 +7,14 @@ module.exports = {
     const dbs = [];
 
     if (useMongo) {
-      await mongo.connect({ reset });
-      dbs.push('mongo');
+      const connection = await mongo.connect({ reset });
+      dbs.push({ name: 'mongo', connection });
     }
 
     if (useSequelize) {
-      await sequelize.connect({ reset });
-      dbs.push('sequelize');
+      const connection = await sequelize.connect({ reset });
+
+      dbs.push({ name: 'sequelize', connection });
     }
 
     return dbs;
