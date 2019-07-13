@@ -30,7 +30,7 @@ const schema = {
     allowNull: false,
     type: Sequelize.STRING,
     validate: {
-      len: [4, 20],
+      len: [4, 144],
     },
   },
 };

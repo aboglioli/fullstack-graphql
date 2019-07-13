@@ -18,8 +18,8 @@ input CreatePostInput {
 
 type Query {
   categories: [Category!]!
-  feed: [Post!]!
-  myPosts: [Post!]!
+  feed: [Post!]! @auth
+  myPosts: [Post!]! @auth
 }
 
 type Mutation {

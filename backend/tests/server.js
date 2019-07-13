@@ -93,6 +93,7 @@ class Server {
   static async checkError(promise, expectedError) {
     try {
       await promise;
+      expect(true).toBe(false); // shouldn't reach this code
     } catch (err) {
       expect(Server.getError(err)).toBe(expectedError);
     }

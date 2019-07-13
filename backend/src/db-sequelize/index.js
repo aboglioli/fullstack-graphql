@@ -56,7 +56,7 @@ module.exports = {
 
     if (reset) {
       await sequelize.sync({ force: true });
-      return;
+      return sequelize;
     }
 
     await sequelize.sync();

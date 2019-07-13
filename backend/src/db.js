@@ -14,7 +14,6 @@ module.exports = {
 
     if (useSequelize) {
       const connection = await sequelize.connect({ reset });
-
       dbs.push({ name: 'Sequelize', connection });
     }
 
