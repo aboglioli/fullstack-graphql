@@ -7,6 +7,8 @@ const config = {
     logging: false,
     port: process.env.APP_PORT,
     jwtSecret: process.env.JWT_SECRET,
+    validateUser: false,
+    passwordMinLength: 6,
 
     useMongo: true, // enable Mongo (mongoose)
     mongoHost: process.env.MONGO_HOST,
@@ -30,6 +32,7 @@ const config = {
     logging: false,
     port: 0,
     jwtSecret: 'my-secret',
+    validateUser: true,
     mongoDatabase: `${process.env.MONGO_DATABASE}-test`,
     sequelizeDialect: 'sqlite',
     sequelizeDatabase: `${process.env.SEQUELIZE_DATABASE}-test`,

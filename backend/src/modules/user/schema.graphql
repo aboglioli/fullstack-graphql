@@ -31,4 +31,5 @@ type Query {
 type Mutation {
   signup(data: UserCreateInput!): User!
   login(username: String!, password: String!): AuthPayload!
+  changePassword(currentPassword: String!, newPassword: String!): Boolean! @auth
 }

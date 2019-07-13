@@ -1,3 +1,4 @@
+const config = require('../../config');
 const {
   generateValidationCode,
   generateAuthToken,
@@ -20,6 +21,10 @@ module.exports = {
       });
       if (existing) {
         throw new Error('USER_EXISTS');
+      }
+
+      if (data.password.length < config.passwordMinLength) {
+        throw new Error('PASSWORD_TOO_SHORT');
       }
 
       const user = await models.User.create(data);
@@ -48,6 +53,27 @@ module.exports = {
       const token = generateAuthToken(user);
 
       return { user, token };
+    },
+    async changePassword(
+      root,
+      { currentPassword, newPassword },
+      { user, models },
+    ) {
+      user = await models.User.findById(user.id);
+
+      const correct = await user.verifyPassword(currentPassword);
+      if (!correct) {
+        throw new Error('INCORRECT_PASSWORD');
+      }
+
+      if (newPassword.length < config.passwordMinLength) {
+        throw new Error('PASSWORD_TOO_SHORT');
+      }
+
+      user.password = newPassword;
+      await user.save();
+
+      return true;
     },
   },
   User: {

@@ -3,6 +3,19 @@ const Server = require('./server');
 const { models } = require('../src/db');
 const { checkError } = Server;
 
+const ME_QUERY = gql`
+  query me {
+    me {
+      id
+      username
+      name
+      email
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 const SIGNUP_MUTATION = gql`
   mutation signup($data: UserCreateInput!) {
     signup(data: $data) {
@@ -28,16 +41,9 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const ME_QUERY = gql`
-  query me {
-    me {
-      id
-      username
-      name
-      email
-      createdAt
-      updatedAt
-    }
+const CHANGE_PASSWORD_MUTATION = gql`
+  mutation changePassword($currentPassword: String!, $newPassword: String!) {
+    changePassword(currentPassword: $currentPassword, newPassword: $newPassword)
   }
 `;
 
@@ -159,5 +165,48 @@ describe('User', () => {
 
   test('Query "me" with not logged in user', async () => {
     await checkError(server.request(ME_QUERY), 'NOT_LOGGED_IN');
+  });
+
+  test('Try to change password with wrong one', async () => {
+    await checkError(
+      server.client.request(CHANGE_PASSWORD_MUTATION, {
+        currentPassword: '777777',
+        newPassword: '777777',
+      }),
+      'INCORRECT_PASSWORD',
+    );
+  });
+
+  test('Change password with a short one', async () => {
+    await checkError(
+      server.client.request(CHANGE_PASSWORD_MUTATION, {
+        currentPassword: '123456',
+        newPassword: '7777',
+      }),
+      'PASSWORD_TOO_SHORT',
+    );
+  });
+
+  test('Change password correctly', async () => {
+    const { changePassword } = await server.client.request(
+      CHANGE_PASSWORD_MUTATION,
+      { currentPassword: '123456', newPassword: '777777' },
+    );
+    expect(changePassword).toBe(true);
+  });
+
+  test('Login with new password', async () => {
+    await checkError(
+      server.request(LOGIN_MUTATION, { username: 'user', password: '123456' }),
+      'LOGIN_INVALID',
+    );
+
+    const { login } = await server.request(LOGIN_MUTATION, {
+      username: 'user',
+      password: '777777',
+    });
+    expect(login).toHaveProperty('token');
+    expect(login).toHaveProperty('user');
+    expect(login.user.username).toBe('user');
   });
 });
