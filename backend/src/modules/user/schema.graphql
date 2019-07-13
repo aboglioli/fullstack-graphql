@@ -26,6 +26,6 @@ type Query {
 }
 
 type Mutation {
-  signup(data: UserCreateInput!): AuthPayload!
+  signup(data: UserCreateInput!): User!
   login(username: String!, password: String!): AuthPayload!
 }

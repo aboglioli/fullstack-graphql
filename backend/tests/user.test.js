@@ -7,13 +7,10 @@ const { checkError } = Server;
 const SIGNUP_MUTATION = gql`
   mutation signup($data: UserCreateInput!) {
     signup(data: $data) {
-      user {
-        id
-        username
-        name
-        email
-      }
-      token
+      id
+      username
+      name
+      email
     }
   }
 `;
@@ -99,12 +96,11 @@ describe('User', () => {
   });
 
   test('Create user', async () => {
-    const { signup } = await server.request(SIGNUP_MUTATION, {
+    const { signup: user } = await server.request(SIGNUP_MUTATION, {
       data: seeder.user,
     });
-    const { user, token } = signup;
 
-    expect(typeof token).toBe('string');
+    expect(typeof user.id).toBe('string');
     expect(user.username).toBe(seeder.user.username);
     expect(user.name).toBe(seeder.user.name);
     expect(user.email).toBe(seeder.user.email);

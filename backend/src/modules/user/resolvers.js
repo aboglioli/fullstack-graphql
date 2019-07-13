@@ -1,4 +1,7 @@
-const { generateToken } = require('../../utils/user');
+const {
+  generateValidationCode,
+  generateAuthToken,
+} = require('../../utils/user');
 
 module.exports = {
   Query: {
@@ -16,9 +19,12 @@ module.exports = {
       }
 
       const user = await models.User.create(data);
-      const token = generateToken(user);
 
-      return { user, token };
+      // Generate validation code
+      const code = generateValidationCode();
+      await models.Redis.set(`validate-user:${user.id}`, code);
+
+      return user;
     },
     async login(root, { username, password }, { models }) {
       const user = await models.User.findOne({ username });
@@ -35,7 +41,7 @@ module.exports = {
         throw new Error('LOGIN_INVALID');
       }
 
-      const token = generateToken(user);
+      const token = generateAuthToken(user);
 
       return { user, token };
     },

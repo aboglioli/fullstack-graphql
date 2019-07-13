@@ -2,15 +2,21 @@ const jwt = require('jsonwebtoken');
 
 const { jwtSecret } = require('../config');
 
-function getUser(token) {
+const getUser = token => {
   return jwt.verify(token, jwtSecret);
-}
+};
 
-function generateToken(user) {
+const generateValidationCode = () =>
+  Math.random()
+    .toString()
+    .slice(2, 10);
+
+const generateAuthToken = user => {
   return jwt.sign({ id: user.id }, jwtSecret);
-}
+};
 
 module.exports = {
   getUser,
-  generateToken,
+  generateValidationCode,
+  generateAuthToken,
 };
