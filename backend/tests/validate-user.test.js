@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const gql = require('graphql-tag');
 const Server = require('./server');
 const seeder = require('./seeder');
@@ -32,12 +31,12 @@ describe('Validate user', () => {
   });
 
   test('Invalid params', async () => {
-    const res = await fetch(`${server.host}/validate-user/123`);
+    const res = await server.fetch('/user/validate/123');
     expect(await res.text()).toBe('INVALID_PARAMS');
   });
 
   test('Nonexistent user', async () => {
-    const res = await fetch(`${server.host}/validate-user/123?code=123`);
+    const res = await server.fetch('/user/validate/123?code=123');
     expect(await res.text()).toBe('USER_NOT_EXIST');
   });
 
@@ -48,23 +47,47 @@ describe('Validate user', () => {
   });
 
   test('Invalid code', async () => {
-    const res = await fetch(`${server.host}/validate-user/${user.id}?code=123`);
+    const res = await server.fetch(`/user/validate/${user.id}?code=123`);
     expect(await res.text()).toBe('INVALID_CODE');
   });
 
   test('Validate user', async () => {
     let code = await getCode(user.id);
 
-    let res = await fetch(
-      `${server.host}/validate-user/${user.id}?code=${code}`,
-    );
+    let res = await server.fetch(`/user/validate/${user.id}?code=${code}`);
     expect(await res.text()).toBe('USER_VALIDATED');
+  });
 
-    // Second validation
-    res = await fetch(`${server.host}/validate-user/${user.id}?code=${code}`);
-    expect(await res.text()).toBe('INVALID_CODE');
-
-    code = await getCode(user.id);
+  test('Code deleted after validation', async () => {
+    const code = await getCode(user.id);
     expect(code).toBe(null);
+  });
+
+  test('Validate already validated user', async () => {
+    const res = await server.fetch(`/user/validate/${user.id}?code=123`);
+    expect(await res.text()).toBe('USER_ALREADY_VALIDATED');
+  });
+
+  test('Generate validation code for validated user', async () => {
+    const res = await server.fetch(`/user/generate-code/${user.id}`);
+    expect(await res.text()).toBe('USER_ALREADY_VALIDATED');
+  });
+
+  test('Generate new validation code', async () => {
+    const { signup: newUser } = await server.request(SIGNUP_MUTATION, {
+      data: {
+        username: 'new-user',
+        name: 'New User',
+        password: '123456',
+        email: 'new-user@new-user.com',
+      },
+    });
+
+    const firstCode = await models.Redis.get(`validate-user:${newUser.id}`);
+    const res = await server.fetch(`/user/generate-code/${newUser.id}`);
+    const secondCode = await models.Redis.get(`validate-user:${newUser.id}`);
+
+    expect(await res.text()).toBe('VALIDATION_CODE_GENERATED');
+    expect(firstCode).not.toBe(secondCode);
   });
 });

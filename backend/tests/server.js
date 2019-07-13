@@ -1,5 +1,6 @@
 require('./mock');
 const { GraphQLClient, request } = require('graphql-request');
+const fetch = require('node-fetch');
 
 const config = require('../src/config');
 const db = require('../src/db');
@@ -63,6 +64,14 @@ class Server {
     return variables
       ? request(this.host, graphql, variables)
       : request(this.host, graphql);
+  }
+
+  fetch(uri) {
+    if (!this.host) {
+      throw new Error('Server is not initialized');
+    }
+
+    return fetch(`${this.host}${uri}`);
   }
 
   static getError(msg) {

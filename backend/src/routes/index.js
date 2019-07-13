@@ -1,5 +1,6 @@
-const validateUser = require('./validate-user');
+const user = require('./user');
 
 module.exports = express => {
-  express.get('/validate-user/:userId', validateUser);
+  express.get('/user/validate/:userId', user.validate);
+  express.get('/user/generate-code/:userId', user.generateCode);
 };
