@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+
 const { validate: validateEmail } = require('../utils/email');
+const { roles } = require('../constants');
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,6 +28,11 @@ const userSchema = new mongoose.Schema(
       maxlength: [30, 'USER_EMAIL_INVALID'],
       validate: [validateEmail, 'USER_EMAIL_INVALID'],
       set: v => v.toLowerCase(),
+    },
+    role: {
+      type: String,
+      enum: roles,
+      default: 'USER',
     },
     active: { type: Boolean, required: true, default: true },
     validated: { type: Boolean, required: true, default: false },

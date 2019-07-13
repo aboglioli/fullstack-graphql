@@ -1,6 +1,5 @@
 const gql = require('graphql-tag');
 const Server = require('./server');
-const seeder = require('./seeder');
 const { models } = require('../src/db');
 
 const SIGNUP_MUTATION = gql`
@@ -16,6 +15,13 @@ const SIGNUP_MUTATION = gql`
 
 const getCode = userId => models.Redis.get(`validate-user:${userId}`);
 
+const newUser = {
+  username: 'user',
+  password: '123456',
+  name: 'User',
+  email: 'user@user.com',
+};
+
 describe('Validate user', () => {
   let server, user;
 
@@ -25,7 +31,7 @@ describe('Validate user', () => {
     await server.start();
 
     const { signup } = await server.request(SIGNUP_MUTATION, {
-      data: seeder.user,
+      data: newUser,
     });
     user = signup;
   });
@@ -53,7 +59,6 @@ describe('Validate user', () => {
 
   test('Validate user', async () => {
     let code = await getCode(user.id);
-
     let res = await server.fetch(`/user/validate/${user.id}?code=${code}`);
     expect(await res.text()).toBe('USER_VALIDATED');
   });
@@ -83,9 +88,9 @@ describe('Validate user', () => {
       },
     });
 
-    const firstCode = await models.Redis.get(`validate-user:${newUser.id}`);
+    const firstCode = await getCode(newUser.id);
     const res = await server.fetch(`/user/generate-code/${newUser.id}`);
-    const secondCode = await models.Redis.get(`validate-user:${newUser.id}`);
+    const secondCode = await getCode(newUser.id);
 
     expect(await res.text()).toBe('VALIDATION_CODE_GENERATED');
     expect(firstCode).not.toBe(secondCode);

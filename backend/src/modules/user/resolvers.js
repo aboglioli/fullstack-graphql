@@ -2,11 +2,15 @@ const {
   generateValidationCode,
   generateAuthToken,
 } = require('../../utils/user');
+const { roles } = require('../../constants');
 
 module.exports = {
   Query: {
     me(root, args, { user, models }) {
       return models.User.findById(user.id);
+    },
+    roles() {
+      return roles;
     },
   },
   Mutation: {
@@ -44,6 +48,11 @@ module.exports = {
       const token = generateAuthToken(user);
 
       return { user, token };
+    },
+  },
+  User: {
+    posts(user, args, { models }) {
+      return models.Post.findAll({ where: { userId: user.id } });
     },
   },
   AuthPayload: {

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-class Contact extends Sequelize.Model {
+class Category extends Sequelize.Model {
   static init(sequelize) {
     return super.init(schema, { sequelize });
   }
@@ -14,24 +14,13 @@ const schema = {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
   },
-  phone: {
+  name: {
     type: Sequelize.STRING,
+    unique: true,
     validate: {
-      len: [5, 20],
-    },
-  },
-  address: {
-    type: Sequelize.STRING,
-    validate: {
-      len: [5, 50],
-    },
-  },
-  email: {
-    type: Sequelize.STRING,
-    validate: {
-      isEmail: true,
+      len: [4, 30],
     },
   },
 };
 
-module.exports = Contact;
+module.exports = Category;

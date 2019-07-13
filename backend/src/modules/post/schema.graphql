@@ -1,0 +1,27 @@
+type Category {
+  id: ID!
+  name: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  content: String!
+  category: Category!
+  user: User!
+}
+
+input CreatePostInput {
+  category: String!
+  content: String!
+}
+
+type Query {
+  categories: [Category!]!
+  feed: [Post!]!
+  myPosts: [Post!]!
+}
+
+type Mutation {
+  createPost(data: CreatePostInput!): Post! @auth
+}

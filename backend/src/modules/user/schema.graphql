@@ -5,6 +5,8 @@ type User {
   email: String!
   active: Boolean @auth(roles: [ADMIN])
   validated: Boolean @auth(roles: [ADMIN])
+  role: Role!
+  posts: [Post!]!
   createdAt: Date!
   updatedAt: Date!
 }
@@ -23,6 +25,7 @@ type AuthPayload {
 
 type Query {
   me: User! @auth
+  roles: [Role!]!
 }
 
 type Mutation {

@@ -1,6 +1,5 @@
 const gql = require('graphql-tag');
 const Server = require('./server');
-const seeder = require('./seeder');
 const { models } = require('../src/db');
 const { checkError } = Server;
 
@@ -42,13 +41,20 @@ const ME_QUERY = gql`
   }
 `;
 
+const newUser = {
+  username: 'user',
+  password: '123456',
+  name: 'User',
+  email: 'user@user.com',
+};
+
 describe('User', () => {
   let server;
 
   beforeAll(async () => {
     server = new Server();
-    await server.start();
     await server.connectDb('user');
+    await server.start();
   });
 
   afterAll(() => server.stop());
@@ -57,7 +63,7 @@ describe('User', () => {
     await checkError(
       server.request(SIGNUP_MUTATION, {
         data: {
-          ...seeder.user,
+          ...newUser,
           username: 'adm',
         },
       }),
@@ -67,7 +73,7 @@ describe('User', () => {
     await checkError(
       server.request(SIGNUP_MUTATION, {
         data: {
-          ...seeder.user,
+          ...newUser,
           name: 'Adm',
         },
       }),
@@ -77,7 +83,7 @@ describe('User', () => {
     await checkError(
       server.request(SIGNUP_MUTATION, {
         data: {
-          ...seeder.user,
+          ...newUser,
           email: 'email.com',
         },
       }),
@@ -87,7 +93,7 @@ describe('User', () => {
     await checkError(
       server.request(SIGNUP_MUTATION, {
         data: {
-          ...seeder.user,
+          ...newUser,
           email: 'a@a.com',
         },
       }),
@@ -97,46 +103,58 @@ describe('User', () => {
 
   test('Create user', async () => {
     const { signup: user } = await server.request(SIGNUP_MUTATION, {
-      data: seeder.user,
+      data: newUser,
     });
 
     expect(typeof user.id).toBe('string');
-    expect(user.username).toBe(seeder.user.username);
-    expect(user.name).toBe(seeder.user.name);
-    expect(user.email).toBe(seeder.user.email);
+    expect(user.username).toBe(newUser.username);
+    expect(user.name).toBe(newUser.name);
+    expect(user.email).toBe(newUser.email);
   });
 
   test('User not validated after creation', async () => {
     const user = await models.User.findOne({
-      username: seeder.user.username,
+      username: newUser.username,
     });
     expect(user.validated).toBe(false);
+  });
 
-    user.validated = true;
-    await user.save();
+  test('Validate created user', async () => {
+    const user = await models.User.findOne({ username: newUser.username });
+    const code = await models.Redis.get(`validate-user:${user.id}`);
+    expect(typeof code).toBe('string');
+    expect(code.length).toBe(8);
+
+    const res = await server.fetch(`/user/validate/${user.id}?code=${code}`);
+    expect(await res.text()).toBe('USER_VALIDATED');
+
+    const validatedUser = await models.User.findOne({
+      username: newUser.username,
+    });
+    expect(validatedUser.validated).toBe(true);
   });
 
   test('Login with new user', async () => {
     const {
       login: { user, token },
     } = await server.request(LOGIN_MUTATION, {
-      username: seeder.user.username,
-      password: seeder.user.password,
+      username: newUser.username,
+      password: newUser.password,
     });
 
     expect(typeof token).toBe('string');
-    expect(user.username).toBe(seeder.user.username);
-    expect(user.name).toBe(seeder.user.name);
-    expect(user.email).toBe(seeder.user.email);
+    expect(user.username).toBe(newUser.username);
+    expect(user.name).toBe(newUser.name);
+    expect(user.email).toBe(newUser.email);
   });
 
   test('Query "me"', async () => {
     await server.login('user', '123456');
     const { me } = await server.client.request(ME_QUERY);
 
-    expect(me.username).toBe(seeder.user.username);
-    expect(me.name).toBe(seeder.user.name);
-    expect(me.email).toBe(seeder.user.email);
+    expect(me.username).toBe(newUser.username);
+    expect(me.name).toBe(newUser.name);
+    expect(me.email).toBe(newUser.email);
   });
 
   test('Query "me" with not logged in user', async () => {
