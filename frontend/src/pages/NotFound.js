@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Box from '../components/core/Box';
-
 const NotFound = ({ location }) => (
-  <Box>
+  <div className="box">
     <b>404</b> - <i>Not Found {location.pathname}</i>
-  </Box>
+  </div>
 );
 
 NotFound.propTypes = {

@@ -4,21 +4,18 @@ import { Link } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const LOGIN_MUTATION = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      token
-      user {
-        id
-        username
-        email
-        name
-      }
+const SIGNUP_MUTATION = gql`
+  mutation signup($data: UserCreateInput!) {
+    signup(data: $data) {
+      id
+      username
+      email
+      name
     }
   }
 `;
 
-const Login = ({ history }) => {
+const Signup = ({ history }) => {
   const [data, setData] = useState({ username: '', password: '' });
 
   const onChange = e => {
@@ -28,9 +25,9 @@ const Login = ({ history }) => {
   };
 
   const confirm = data => {
-    if (data && data.login) {
-      const { login } = data;
-      localStorage.setItem('TOKEN', login.token);
+    if (data && data.signup) {
+      const { signup } = data;
+      console.log(signup);
       history.push('/');
     }
   };
@@ -45,7 +42,7 @@ const Login = ({ history }) => {
       }}
     >
       <div className="box" style={{ width: '400px' }}>
-        <h2>Login</h2>
+        <h2>Signup</h2>
         <input
           className="input"
           name="username"
@@ -70,15 +67,15 @@ const Login = ({ history }) => {
             alignItems: 'center',
           }}
         >
-          <Link to="/signup">Sign up</Link>
+          <Link to="/login">Log in</Link>
           <Mutation
-            mutation={LOGIN_MUTATION}
+            mutation={SIGNUP_MUTATION}
             variables={data}
             onCompleted={confirm}
           >
             {mutation => (
               <button className="button" onClick={mutation}>
-                Log in
+                Sign up
               </button>
             )}
           </Mutation>
@@ -88,8 +85,8 @@ const Login = ({ history }) => {
   );
 };
 
-Login.propTypes = {
+Signup.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-export default Login;
+export default Signup;

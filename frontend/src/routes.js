@@ -1,18 +1,23 @@
 import config from './config';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Playground from './pages/Playground';
 import NotFound from './pages/NotFound';
 import ProtectedPage from './pages/ProtectedPage';
 import Meta from './pages/Meta';
 
-let routes = [
+export const routes = [
   {
     path: '/login',
     component: Login,
   },
   {
-    path: '/playground',
+    path: '/signup',
+    component: Signup,
+  },
+  {
+    path: '/playground', // testing area (Area 51)
     component: Playground,
   },
   {
@@ -21,8 +26,19 @@ let routes = [
     component: Dashboard,
     routes: [
       {
-        path: '/page1',
-        private: config.authEnabled,
+        path: '/feed',
+        component: ProtectedPage,
+      },
+      {
+        path: '/my-posts',
+        component: ProtectedPage,
+      },
+      {
+        path: '/profile',
+        component: ProtectedPage,
+      },
+      {
+        path: '/change-password',
         component: ProtectedPage,
       },
       {
@@ -38,4 +54,19 @@ let routes = [
   },
 ];
 
-export default routes;
+export const sidebar = [
+  {
+    section: 'Posts',
+    items: [
+      { text: 'Feed', link: '/feed' },
+      { text: 'My posts', link: '/my-posts' },
+    ],
+  },
+  {
+    section: 'Profile',
+    items: [
+      { text: 'Profile', link: '/profile' },
+      { text: 'Change password', link: '/change-password' },
+    ],
+  },
+];

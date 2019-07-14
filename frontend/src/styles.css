@@ -41,3 +41,42 @@ h3 {
 h4 {
     margin-bottom: 0.6rem;
 }
+
+a {
+    text-decoration: none;
+    color: #0069ff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.box {
+    border: 2px solid #f1f1f1;
+    border-radius: 3px;
+    padding: 2rem;
+}
+
+.input {
+    border: 2px solid #f1f1f1;
+    border-radius: 3px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+button {
+    cursor: pointer;
+}
+
+.button {
+    background-color: #0069ff;
+    border: 1px solid #ececec;
+    border-radius: 3px;
+    color: #fff;
+    font-size: .9rem;
+    height: 3rem;
+    line-height: 3rem;
+    padding: 0 1.6rem;
+}
