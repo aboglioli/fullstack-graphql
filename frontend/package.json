@@ -9,6 +9,7 @@
     "apollo-boost": "^0.4.3",
     "apollo-link-context": "^1.0.18",
     "graphql": "^14.4.2",
+    "next": "^9.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
@@ -17,10 +18,13 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "cra:start": "react-scripts start",
+    "cra:build": "react-scripts build",
+    "cra:test": "react-scripts test",
+    "cra:eject": "react-scripts eject",
     "lint": "eslint --fix src"
   },
   "eslintConfig": {
