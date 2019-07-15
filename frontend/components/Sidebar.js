@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import './Sidebar.css';
 
 const SidebarSection = ({ section, items }) => {
   const [open, setOpen] = useState(true);
@@ -24,11 +23,9 @@ const SidebarSection = ({ section, items }) => {
           open ? '' : 'sidebar__section__items--closed'
         }`}
       >
-        {items.map(({ link, text, ...rest }, i) => (
+        {items.map(({ link, text }, i) => (
           <li key={i} className="sidebar__section__item">
-            <a href={link} {...rest}>
-              {text}
-            </a>
+            <Link href={link}>{text}</Link>
           </li>
         ))}
       </ul>

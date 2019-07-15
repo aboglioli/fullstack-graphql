@@ -9,6 +9,7 @@
     "apollo-boost": "^0.4.3",
     "apollo-link-context": "^1.0.18",
     "graphql": "^14.4.2",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^9.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -21,11 +22,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "cra:start": "react-scripts start",
-    "cra:build": "react-scripts build",
-    "cra:test": "react-scripts test",
-    "cra:eject": "react-scripts eject",
-    "lint": "eslint --fix src"
+    "lint": "eslint --fix lib pages components"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",

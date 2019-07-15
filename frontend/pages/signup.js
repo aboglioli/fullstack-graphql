@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -67,7 +67,7 @@ const Signup = ({ history }) => {
             alignItems: 'center',
           }}
         >
-          <Link to="/login">Log in</Link>
+          <Link href="/login">Log in</Link>
           <Mutation
             mutation={SIGNUP_MUTATION}
             variables={data}

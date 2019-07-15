@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import './Layout.css';
-
 const Layout = ({ logo, toolbar, sidebar, children, footer }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 

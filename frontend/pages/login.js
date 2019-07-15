@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -30,7 +30,7 @@ const Login = ({ history }) => {
   const confirm = data => {
     if (data && data.login) {
       const { login } = data;
-      localStorage.setItem('TOKEN', login.token);
+      /* localStorage.setItem('TOKEN', login.token); */
       history.push('/');
     }
   };
@@ -70,7 +70,9 @@ const Login = ({ history }) => {
             alignItems: 'center',
           }}
         >
-          <Link to="/signup">Sign up</Link>
+          <Link href="/signup">
+            <a>Sign up</a>
+          </Link>
           <Mutation
             mutation={LOGIN_MUTATION}
             variables={data}
