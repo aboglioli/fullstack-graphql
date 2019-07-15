@@ -11,8 +11,7 @@ const createClient = initialState => {
 
   // Links
   const authLink = setContext((_, { headers }) => {
-    // const token = localStorage.getItem('TOKEN');
-    const token = null;
+    const token = isBrowser && localStorage.getItem('TOKEN');
     return {
       headers: {
         ...headers,

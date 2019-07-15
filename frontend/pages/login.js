@@ -30,7 +30,7 @@ const Login = ({ history }) => {
   const confirm = data => {
     if (data && data.login) {
       const { login } = data;
-      /* localStorage.setItem('TOKEN', login.token); */
+      localStorage.setItem('TOKEN', login.token);
       history.push('/');
     }
   };

@@ -45,7 +45,7 @@ const withApollo = App => {
         Head.rewind();
       }
 
-      const apolloState = apollo.cache.extract();
+      const apolloState = apollo.extract();
 
       return {
         ...initialProps,
