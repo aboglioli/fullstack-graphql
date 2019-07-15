@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -23,6 +24,9 @@ const Meta = () => {
 
         return (
           <ul>
+            <li>
+              <Link href="/login"><a>Login</a></Link>
+            </li>
             <li>
               <b>Author</b>: {meta.author}
             </li>

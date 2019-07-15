@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -18,7 +17,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = ({ history }) => {
+const Login = () => {
   const [data, setData] = useState({ username: '', password: '' });
 
   const onChange = e => {
@@ -31,7 +30,6 @@ const Login = ({ history }) => {
     if (data && data.login) {
       const { login } = data;
       localStorage.setItem('TOKEN', login.token);
-      history.push('/');
     }
   };
 
@@ -88,10 +86,6 @@ const Login = ({ history }) => {
       </div>
     </div>
   );
-};
-
-Login.propTypes = {
-  history: PropTypes.object.isRequired,
 };
 
 export default Login;

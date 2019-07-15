@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -15,7 +14,7 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
-const Signup = ({ history }) => {
+const Signup = () => {
   const [data, setData] = useState({ username: '', password: '' });
 
   const onChange = e => {
@@ -28,7 +27,6 @@ const Signup = ({ history }) => {
     if (data && data.signup) {
       const { signup } = data;
       console.log(signup);
-      history.push('/');
     }
   };
 
@@ -67,7 +65,7 @@ const Signup = ({ history }) => {
             alignItems: 'center',
           }}
         >
-          <Link href="/login">Log in</Link>
+          <Link href="/login"><a>Log in</a></Link>
           <Mutation
             mutation={SIGNUP_MUTATION}
             variables={data}
@@ -83,10 +81,6 @@ const Signup = ({ history }) => {
       </div>
     </div>
   );
-};
-
-Signup.propTypes = {
-  history: PropTypes.object.isRequired,
 };
 
 export default Signup;
