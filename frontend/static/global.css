@@ -80,3 +80,11 @@ button {
     line-height: 3rem;
     padding: 0 1.6rem;
 }
+
+.error {
+    background-color: #dc5a60;
+    border-radius: 3px;
+    color: #fff;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}

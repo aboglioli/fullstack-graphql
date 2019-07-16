@@ -10,7 +10,9 @@
     "apollo-link-context": "^1.0.18",
     "graphql": "^14.4.2",
     "isomorphic-unfetch": "^3.0.0",
+    "js-cookie": "^2.2.0",
     "next": "^9.0.1",
+    "next-cookies": "^1.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
@@ -22,7 +24,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix lib pages components"
+    "lint": "eslint --fix lib pages components utils"
   },
   "eslintConfig": {
     "extends": "react-app"

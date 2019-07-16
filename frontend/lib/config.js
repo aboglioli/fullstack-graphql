@@ -1,13 +1,9 @@
 const mergeConfig = (env1, env2) => ({ ...env1, ...env2 });
 
 const config = {
-  development: {
-    authEnabled: false,
-  },
+  development: {},
   test: {},
-  production: {
-    authEnabled: true,
-  },
+  production: {},
 };
 
 config.test = mergeConfig(config.development, config.test);

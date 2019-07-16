@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import withAuth from '../lib/with-auth';
+
 const META_QUERY = gql`
   {
     meta {
@@ -45,4 +47,4 @@ const Meta = () => {
   );
 };
 
-export default Meta;
+export default withAuth(Meta);

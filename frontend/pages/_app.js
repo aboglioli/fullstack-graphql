@@ -4,6 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 
 import '../lib/icons';
 import withApollo from '../lib/with-apollo';
+import Base from '../components/Base';
 import Dashboard from '../components/Dashboard';
 
 class MyApp extends App {
@@ -14,7 +15,9 @@ class MyApp extends App {
       <Container>
         <ApolloProvider client={apolloClient}>
           {disableDashboard ? (
-            <Component {...pageProps} />
+            <Base title={title}>
+              <Component {...pageProps} />
+            </Base>
           ) : (
             <Dashboard title={title}>
               <Component {...pageProps} />

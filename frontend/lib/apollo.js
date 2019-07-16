@@ -3,14 +3,15 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import fetch from 'isomorphic-unfetch';
+import nextCookies from 'next-cookies';
 
 let apolloClient = null;
 const isBrowser = typeof window !== 'undefined';
 
-const createClient = initialState => {
+const createClient = (initialState, ctx) => {
   // Links
   const authLink = setContext((_, { headers }) => {
-    const token = isBrowser && localStorage.getItem('TOKEN');
+    const { token } = nextCookies(ctx);
     return {
       headers: {
         ...headers,
@@ -35,15 +36,15 @@ const createClient = initialState => {
   return client;
 };
 
-export default function initApollo(initialState) {
+export default function initApollo(initialState, ctx) {
   // New client for every server-side request
   if (!isBrowser) {
-    return createClient(initialState);
+    return createClient(initialState, ctx);
   }
 
   // Reuse client on the client-side
   if (!apolloClient) {
-    apolloClient = createClient(initialState);
+    apolloClient = createClient(initialState, ctx);
   }
 
   return apolloClient;

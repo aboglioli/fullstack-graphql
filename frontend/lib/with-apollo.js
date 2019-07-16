@@ -1,27 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import initApollo from './apollo';
 import Head from 'next/head';
 import { getDataFromTree } from 'react-apollo';
 
+import initApollo from './apollo';
+
 const withApollo = App => {
-  return class Apollo extends Component {
-    static displayName = 'withApollo(App)';
+  return class WithApollo extends Component {
+    static displayName = `withApollo(${App.displayName || 'All'})`;
 
     static propTypes = {
       apolloState: PropTypes.object.isRequired,
     };
 
     static async getInitialProps(ctx) {
-      const { Component, router } = ctx;
+      const {
+        Component,
+        router,
+        ctx: { res },
+      } = ctx;
+
       let initialProps = {};
       if (App.getInitialProps) {
         initialProps = await App.getInitialProps(ctx);
       }
 
+      const apollo = initApollo({}, ctx);
+
+      if (res && res.finished) {
+        // In case of redirection
+        return {};
+      }
+
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apollo = initApollo();
       if (typeof window === 'undefined') {
         try {
           // Run all GraphQL queries
@@ -45,7 +57,7 @@ const withApollo = App => {
         Head.rewind();
       }
 
-      const apolloState = apollo.extract();
+      const apolloState = apollo.cache.extract();
 
       return {
         ...initialProps,
