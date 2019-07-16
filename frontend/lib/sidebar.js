@@ -13,4 +13,10 @@ export const sidebar = [
       { text: 'Change password', link: '/profile/change-password' },
     ],
   },
+  {
+    section: 'Server',
+    items: [
+      { text: 'Meta', link: '/meta' },
+    ],
+  },
 ];

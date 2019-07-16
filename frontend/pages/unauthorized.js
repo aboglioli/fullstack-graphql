@@ -19,9 +19,7 @@ const Unauthorized = () => {
         justifyContent: 'center',
       }}
     >
-    <b>
-      Unauthorized
-    </b>
+      <b>Unauthorized</b>
     </div>
   );
 };

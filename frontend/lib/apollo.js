@@ -40,7 +40,10 @@ const createClient = (initialState, { ctx } = {}) => {
         err => err.message === 'NOT_LOGGED_IN',
       );
       if (notLoggedIn) {
-        redirect('/unauthorized', ctx && ctx.res && !isBrowser ? ctx.res : null);
+        redirect(
+          '/unauthorized',
+          ctx && ctx.res && !isBrowser ? ctx.res : null,
+        );
       }
     }
   });

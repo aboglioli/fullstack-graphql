@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { getDataFromTree } from 'react-apollo';
 
 import initApollo from './apollo';
-import { redirect } from '../utils/auth';
 
 const withApollo = App => {
   return class WithApollo extends Component {

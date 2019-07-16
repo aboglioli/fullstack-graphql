@@ -4,6 +4,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import withAuth from '../lib/with-auth';
+import Error from '../components/Error';
 
 const META_QUERY = gql`
   {
@@ -17,33 +18,27 @@ const META_QUERY = gql`
 
 const Meta = () => {
   return (
-    <Query query={META_QUERY}>
-      {({ loading, error, data }) => {
-        if (loading) return <b>Loading...</b>;
-        if (error) return <b>ERROR</b>;
+    <div className="box">
+      <Query query={META_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return <b>Loading...</b>;
+          if (error) return <Error code={error.graphQLErrors[0].message} />;
 
-        const { meta } = data;
+          const { meta } = data;
 
-        return (
-          <ul>
-            <li>
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            </li>
-            <li>
-              <b>Author</b>: {meta.author}
-            </li>
-            <li>
-              <b>Backend version</b>: {meta.version}
-            </li>
-            <li>
-              <b>Uptime</b>: {meta.uptime}
-            </li>
-          </ul>
-        );
-      }}
-    </Query>
+          return (
+            <>
+              <h2>Author</h2>
+              <p>{meta.author}</p>
+              <h2>Backend version</h2>
+              <p>{meta.version}</p>
+              <h2>Uptime</h2>
+              <p>{meta.uptime}</p>
+            </>
+          );
+        }}
+      </Query>
+    </div>
   );
 };
 
