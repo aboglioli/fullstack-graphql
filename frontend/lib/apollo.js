@@ -1,9 +1,13 @@
 import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
+import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
+import { onError } from 'apollo-link-error';
 import fetch from 'isomorphic-unfetch';
 import nextCookies from 'next-cookies';
+
+import { logout } from '../utils/auth';
 
 let apolloClient = null;
 const isBrowser = typeof window !== 'undefined';
@@ -25,11 +29,29 @@ const createClient = (initialState, ctx) => {
     fetch: !isBrowser && fetch,
   });
 
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      const notLoggedIn = graphQLErrors.some(
+        err => err.message === 'NOT_LOGGED_IN',
+      );
+
+      if (notLoggedIn) {
+        logout();
+      }
+    }
+
+    if (networkError) {
+      if (isBrowser) {
+        logout();
+      }
+    }
+  });
+
   // Client
   const client = new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser,
-    link: authLink.concat(httpLink),
+    link: ApolloLink.from([authLink, errorLink, httpLink]),
     cache: new InMemoryCache().restore(initialState || {}),
   });
 
