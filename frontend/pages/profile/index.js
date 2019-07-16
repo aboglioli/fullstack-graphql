@@ -1,11 +1,9 @@
 import React from 'react';
 
-import Dashboard from '../../components/Dashboard';
-
 const Profile = () => {
-  return (
-    <Dashboard>Profile</Dashboard>
-  );
+  return <div>Profile</div>;
 };
+
+Profile.title = 'Profile';
 
 export default Profile;

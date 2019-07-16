@@ -92,4 +92,6 @@ const Login = () => {
   );
 };
 
+Login.disableDashboard = true;
+
 export default Login;

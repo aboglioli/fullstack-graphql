@@ -68,7 +68,9 @@ const Signup = () => {
               alignItems: 'center',
             }}
           >
-            <Link href="/login"><a>Log in</a></Link>
+            <Link href="/login">
+              <a>Log in</a>
+            </Link>
             <Mutation
               mutation={SIGNUP_MUTATION}
               variables={data}
@@ -86,5 +88,7 @@ const Signup = () => {
     </Base>
   );
 };
+
+Signup.disableDashboard = true;
 
 export default Signup;

@@ -1,11 +1,9 @@
 import React from 'react';
 
-import Dashboard from '../../components/Dashboard';
-
 const MyPosts = () => {
-  return (
-    <Dashboard>MyPosts</Dashboard>
-  );
+  return <div>MyPosts</div>;
 };
+
+MyPosts.title = 'MyPosts';
 
 export default MyPosts;

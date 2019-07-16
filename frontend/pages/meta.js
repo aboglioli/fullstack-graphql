@@ -25,7 +25,9 @@ const Meta = () => {
         return (
           <ul>
             <li>
-              <Link href="/login"><a>Login</a></Link>
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
             </li>
             <li>
               <b>Author</b>: {meta.author}

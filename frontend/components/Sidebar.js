@@ -25,7 +25,9 @@ const SidebarSection = ({ section, items }) => {
       >
         {items.map(({ link, text }, i) => (
           <li key={i} className="sidebar__section__item">
-            <Link href={link}><a>{text}</a></Link>
+            <Link href={link}>
+              <a>{text}</a>
+            </Link>
           </li>
         ))}
       </ul>

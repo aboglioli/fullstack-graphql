@@ -1,11 +1,9 @@
 import React from 'react';
 
-import Dashboard from '../../components/Dashboard';
-
 const ChangePassword = () => {
-  return (
-    <Dashboard>ChangePassword</Dashboard>
-  );
+  return <div>ChangePassword</div>;
 };
+
+ChangePassword.title = 'ChangePassword';
 
 export default ChangePassword;

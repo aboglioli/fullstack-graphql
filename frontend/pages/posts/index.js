@@ -1,11 +1,9 @@
 import React from 'react';
 
-import Dashboard from '../../components/Dashboard';
-
 const Feed = () => {
-  return (
-    <Dashboard>Feed</Dashboard>
-  );
+  return <div>Feed</div>;
 };
+
+Feed.title = 'Feed';
 
 export default Feed;
