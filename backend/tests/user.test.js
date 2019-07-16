@@ -1,3 +1,4 @@
+const { GraphQLClient } = require('graphql-request');
 const gql = require('graphql-tag');
 const Server = require('./server');
 const { models } = require('../src/db');
@@ -165,6 +166,16 @@ describe('User', () => {
 
   test('Query "me" with not logged in user', async () => {
     await checkError(server.request(ME_QUERY), 'NOT_LOGGED_IN');
+  });
+
+  test('Query "me" with malformed token', async () => {
+    const client = new GraphQLClient(server.host, {
+      headers: {
+        Authorization: 'Bearer 123',
+      },
+    });
+
+    await checkError(client.request(ME_QUERY), 'NOT_LOGGED_IN');
   });
 
   test('Try to change password with wrong one', async () => {

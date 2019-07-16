@@ -7,7 +7,7 @@ import { onError } from 'apollo-link-error';
 import fetch from 'isomorphic-unfetch';
 import nextCookies from 'next-cookies';
 
-import { logout } from '../utils/auth';
+import { redirect } from '../utils/auth';
 
 let apolloClient = null;
 const isBrowser = typeof window !== 'undefined';
@@ -34,19 +34,13 @@ const createClient = (initialState, { ctx } = {}) => {
     fetch: !isBrowser && fetch,
   });
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (isBrowser) {
-      if (graphQLErrors && graphQLErrors.length > 0) {
-        const notLoggedIn = graphQLErrors.some(
-          err => err.message === 'NOT_LOGGED_IN',
-        );
-        if (notLoggedIn) {
-          logout();
-        }
-      }
-
-      if (networkError && networkError.bodyText.includes('NOT_LOGGED_IN')) {
-        logout();
+  const errorLink = onError(({ graphQLErrors }) => {
+    if (graphQLErrors && graphQLErrors.length > 0) {
+      const notLoggedIn = graphQLErrors.some(
+        err => err.message === 'NOT_LOGGED_IN',
+      );
+      if (notLoggedIn) {
+        redirect('/unauthorized', ctx && ctx.res && !isBrowser ? ctx.res : null);
       }
     }
   });

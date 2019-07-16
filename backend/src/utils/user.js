@@ -3,7 +3,11 @@ const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config');
 
 const getUser = token => {
-  return jwt.verify(token, jwtSecret);
+  try {
+    return jwt.verify(token, jwtSecret);
+  } catch (err) {
+    return null;
+  }
 };
 
 const generateValidationCode = () =>

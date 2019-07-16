@@ -29,7 +29,7 @@ export const auth = ctx => {
   const { res } = ctx;
 
   if (!token) {
-    redirect('/login', res);
+    redirect('/unauthorized', res);
     return null;
   }
 

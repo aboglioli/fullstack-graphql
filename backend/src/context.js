@@ -20,15 +20,11 @@ module.exports = ({ request }) => {
   const authorization = request && request.get('Authorization');
   if (authorization && authorization.startsWith('Bearer ')) {
     const token = authorization.replace('Bearer ', '');
+    const user = getUser(token);
 
-    let user;
-    try {
-      user = getUser(token);
-    } catch (err) {
-      throw new Error('NOT_LOGGED_IN');
+    if (token && user) {
+      ctx = { ...ctx, token, user };
     }
-
-    ctx = { ...ctx, token, user };
   }
 
   return {
