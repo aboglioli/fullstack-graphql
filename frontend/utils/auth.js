@@ -12,19 +12,24 @@ export const logout = () => {
   Router.push('/login');
 };
 
+export const redirect = (target, res) => {
+  if (res) {
+    // Server
+    res.writeHead(302, { Location: target });
+    res.end();
+    return;
+  }
+
+  // Client
+  Router.replace(target);
+};
+
 export const auth = ctx => {
   const { token } = nextCookies(ctx);
   const { res } = ctx;
 
-  if (res && !token) {
-    // Server
-    res.writeHead(302, { Location: '/login' });
-    res.end();
-    return null;
-  }
-
   if (!token) {
-    Router.replace('/login');
+    redirect('/login', res);
     return null;
   }
 

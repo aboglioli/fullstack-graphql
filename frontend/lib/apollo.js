@@ -12,10 +12,15 @@ import { logout } from '../utils/auth';
 let apolloClient = null;
 const isBrowser = typeof window !== 'undefined';
 
-const createClient = (initialState, ctx) => {
+const createClient = (initialState, { ctx } = {}) => {
   // Links
   const authLink = setContext((_, { headers }) => {
-    const { token } = nextCookies(ctx);
+    const { token } = isBrowser
+      ? nextCookies()
+      : ctx && ctx.req
+      ? nextCookies(ctx)
+      : {};
+
     return {
       headers: {
         ...headers,
@@ -30,18 +35,17 @@ const createClient = (initialState, ctx) => {
   });
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors) {
-      const notLoggedIn = graphQLErrors.some(
-        err => err.message === 'NOT_LOGGED_IN',
-      );
-
-      if (notLoggedIn) {
-        logout();
+    if (isBrowser) {
+      if (graphQLErrors && graphQLErrors.length > 0) {
+        const notLoggedIn = graphQLErrors.some(
+          err => err.message === 'NOT_LOGGED_IN',
+        );
+        if (notLoggedIn) {
+          logout();
+        }
       }
-    }
 
-    if (networkError) {
-      if (isBrowser) {
+      if (networkError && networkError.bodyText.includes('NOT_LOGGED_IN')) {
         logout();
       }
     }
