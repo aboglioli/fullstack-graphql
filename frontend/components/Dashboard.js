@@ -7,13 +7,13 @@ import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
 import Layout from './Layout';
 
-const Dashboard = ({ children }) => {
+const Dashboard = ({ title, children }) => {
   return (
     <>
       <Head>
-        <title>fullstack-graphql</title>
-        <link href="/static/styles.css" rel="stylesheet" />
-        <link href="/static/layout.css" rel="stylesheet" />
+        <title>{title} | fullstack-graphql</title>
+        <link href="/static/global.css" rel="stylesheet" />
+        <link href="/static/dashboard.css" rel="stylesheet" />
         <link href="/static/sidebar.css" rel="stylesheet" />
       </Head>
       <Layout
@@ -32,7 +32,12 @@ const Dashboard = ({ children }) => {
   );
 };
 
+Dashboard.defaultProps = {
+  title: 'Dashboard',
+};
+
 Dashboard.propTypes = {
+  title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 

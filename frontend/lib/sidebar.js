@@ -2,15 +2,15 @@ export const sidebar = [
   {
     section: 'Posts',
     items: [
-      { text: 'Feed', link: '/feed' },
-      { text: 'My posts', link: '/my-posts' },
+      { text: 'Feed', link: '/posts' },
+      { text: 'My posts', link: '/posts/my-posts' },
     ],
   },
   {
     section: 'Profile',
     items: [
       { text: 'Profile', link: '/profile' },
-      { text: 'Change password', link: '/change-password' },
+      { text: 'Change password', link: '/profile/change-password' },
     ],
   },
 ];

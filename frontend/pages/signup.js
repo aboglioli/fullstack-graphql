@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import Base from '../components/Base';
+
 const SIGNUP_MUTATION = gql`
   mutation signup($data: UserCreateInput!) {
     signup(data: $data) {
@@ -31,55 +33,57 @@ const Signup = () => {
   };
 
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <div className="box" style={{ width: '400px' }}>
-        <h2>Signup</h2>
-        <input
-          className="input"
-          name="username"
-          value={data.username}
-          onChange={onChange}
-          type="text"
-          placeholder="Username"
-        />
-        <input
-          className="input"
-          name="password"
-          value={data.password}
-          onChange={onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <div
-          style={{
-            marginTop: '1rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Link href="/login"><a>Log in</a></Link>
-          <Mutation
-            mutation={SIGNUP_MUTATION}
-            variables={data}
-            onCompleted={confirm}
+    <Base title="Sign up">
+      <div
+        style={{
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div className="box" style={{ width: '400px' }}>
+          <h2>Signup</h2>
+          <input
+            className="input"
+            name="username"
+            value={data.username}
+            onChange={onChange}
+            type="text"
+            placeholder="Username"
+          />
+          <input
+            className="input"
+            name="password"
+            value={data.password}
+            onChange={onChange}
+            type="password"
+            placeholder="Password"
+          />
+          <div
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
           >
-            {mutation => (
-              <button className="button" onClick={mutation}>
-                Sign up
-              </button>
-            )}
-          </Mutation>
+            <Link href="/login"><a>Log in</a></Link>
+            <Mutation
+              mutation={SIGNUP_MUTATION}
+              variables={data}
+              onCompleted={confirm}
+            >
+              {mutation => (
+                <button className="button" onClick={mutation}>
+                  Sign up
+                </button>
+              )}
+            </Mutation>
+          </div>
         </div>
       </div>
-    </div>
+    </Base>
   );
 };
 

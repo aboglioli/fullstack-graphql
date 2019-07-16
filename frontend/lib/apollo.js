@@ -39,10 +39,12 @@ const createClient = initialState => {
 export default function initApollo(initialState) {
   const isBrowser = typeof window !== 'undefined';
 
+  // New client for every server-side request
   if (!isBrowser) {
     return createClient(initialState);
   }
 
+  // Reuse client on the client-side
   if (!apolloClient) {
     apolloClient = createClient(initialState);
   }
