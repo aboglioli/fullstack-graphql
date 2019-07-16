@@ -5,10 +5,9 @@ import { setContext } from 'apollo-link-context';
 import fetch from 'isomorphic-unfetch';
 
 let apolloClient = null;
+const isBrowser = typeof window !== 'undefined';
 
 const createClient = initialState => {
-  const isBrowser = typeof window !== 'undefined';
-
   // Links
   const authLink = setContext((_, { headers }) => {
     const token = isBrowser && localStorage.getItem('TOKEN');
@@ -37,8 +36,6 @@ const createClient = initialState => {
 };
 
 export default function initApollo(initialState) {
-  const isBrowser = typeof window !== 'undefined';
-
   // New client for every server-side request
   if (!isBrowser) {
     return createClient(initialState);
