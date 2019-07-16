@@ -23,23 +23,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-    margin: 0;
-}
-
-h1 {
-    margin-bottom: 1.5rem;
-}
-
-h2 {
-    margin-bottom: 1.2rem;
-}
-
-h3 {
-    margin-bottom: 0.9rem;
-}
-
-h4 {
-    margin-bottom: 0.6rem;
+    margin: 1rem 0;
 }
 
 a {
@@ -79,12 +63,4 @@ button {
     height: 3rem;
     line-height: 3rem;
     padding: 0 1.6rem;
-}
-
-.error {
-    background-color: #dc5a60;
-    border-radius: 3px;
-    color: #fff;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
 }

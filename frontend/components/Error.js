@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import Message from './Message';
+
 const ERRORS_QUERY = gql`
   query errors {
     errors {
@@ -22,9 +24,9 @@ const Error = ({ code }) => {
         error = data.errors.find(error => error.code === code);
 
         return (
-          <div className="error">
+          <Message error>
             {code && error ? error.message : 'Unknown error'}
-          </div>
+          </Message>
         );
       }}
     </Query>

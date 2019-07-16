@@ -81,20 +81,14 @@ const Login = () => {
             mutation={LOGIN_MUTATION}
             variables={data}
             onCompleted={confirm}
+            onError={({ graphQLErrors }) => {
+              if (graphQLErrors.length > 0) {
+                setError(graphQLErrors[0].message);
+              }
+            }}
           >
-            {mutation => (
-              <button
-                className="button"
-                onClick={async () => {
-                  try {
-                    await mutation();
-                  } catch ({ graphQLErrors }) {
-                    if (graphQLErrors.length > 0) {
-                      setError(graphQLErrors[0].message);
-                    }
-                  }
-                }}
-              >
+            {(mutation, { loading }) => (
+              <button className="button" disabled={loading} onClick={mutation}>
                 Log in
               </button>
             )}

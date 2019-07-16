@@ -22,6 +22,7 @@ const Toolbar = () => {
               padding: '0 1rem',
             }}
             onClick={async () => {
+              await client.clearStore();
               await client.resetStore();
               logout();
             }}

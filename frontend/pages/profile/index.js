@@ -18,36 +18,39 @@ const ME_QUERY = gql`
 
 const Profile = () => {
   return (
-    <div className="box">
-      <Query query={ME_QUERY}>
-        {({ data, loading, error }) => {
-          if (loading) return <b>Loading...</b>;
-          if (error)
+    <>
+      <h1>Profile</h1>
+      <div className="box">
+        <Query query={ME_QUERY}>
+          {({ data, loading, error }) => {
+            if (loading) return <b>Loading...</b>;
+            if (error)
+              return (
+                <Error
+                  code={
+                    error.graphQLErrors.length > 0
+                      ? error.graphQLErrors[0].message
+                      : ''
+                  }
+                />
+              );
+
+            const { me: user } = data;
+
             return (
-              <Error
-                code={
-                  error.graphQLErrors.length > 0
-                    ? error.graphQLErrors[0].message
-                    : ''
-                }
-              />
+              <>
+                <h3>Username</h3>
+                <p>{user.username}</p>
+                <h3>Name</h3>
+                <p>{user.name}</p>
+                <h3>Email</h3>
+                <p>{user.email}</p>
+              </>
             );
-
-          const { me: user } = data;
-
-          return (
-            <>
-              <h2>Username</h2>
-              <p>{user.username}</p>
-              <h2>Name</h2>
-              <p>{user.name}</p>
-              <h2>Email</h2>
-              <p>{user.email}</p>
-            </>
-          );
-        }}
-      </Query>
-    </div>
+          }}
+        </Query>
+      </div>
+    </>
   );
 };
 

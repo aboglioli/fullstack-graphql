@@ -15,8 +15,6 @@ export const sidebar = [
   },
   {
     section: 'Server',
-    items: [
-      { text: 'Meta', link: '/meta' },
-    ],
+    items: [{ text: 'Meta', link: '/meta' }],
   },
 ];

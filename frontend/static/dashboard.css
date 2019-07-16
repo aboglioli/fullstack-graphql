@@ -34,9 +34,9 @@
     grid-area: nav;
     overflow-x: hidden;
     overflow-y: auto;
-    transition: .5s;
     white-space: nowrap;
     width: var(--sidebar-width);
+    transition: width .5s;
 }
 
 .sidebar--closed {
