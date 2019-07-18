@@ -5,14 +5,24 @@ import gql from 'graphql-tag';
 import Message from '../../components/Message';
 import Error from '../../components/Error';
 
-const CHANGE_PASSWORD_MUTATION = gql`
-  mutation changePassword($currentPassword: String!, $newPassword: String!) {
-    changePassword(currentPassword: $currentPassword, newPassword: $newPassword)
+const CREATE_POST_MUTATION = gql`
+  mutation createPost($data: CreatePostInput!) {
+    createPost(data: $data) {
+      id
+      content
+      category {
+        id
+        name
+      }
+      user {
+        id
+      }
+    }
   }
 `;
 
-const ChangePassword = () => {
-  const [data, setData] = useState({ currentPassword: '', newPassword: '' });
+const Create = () => {
+  const [data, setData] = useState({ category: '', content: '' });
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
@@ -26,7 +36,7 @@ const ChangePassword = () => {
 
   return (
     <>
-      <h1>Change password</h1>
+      <h1>Create post</h1>
       <div className="box">
         {error && <Error code={error} />}
         {message && <Message>{message}</Message>}
@@ -38,29 +48,29 @@ const ChangePassword = () => {
         >
           <input
             className="input"
-            style={{ marginRight: '0.5rem' }}
-            name="currentPassword"
-            value={data.currentPassword}
+            style={{ flex: 1, marginRight: '0.5rem' }}
+            name="category"
+            value={data.category}
             onChange={onChange}
             type="text"
-            placeholder="Current password"
+            placeholder="Category"
           />
           <input
             className="input"
-            style={{ marginLeft: '0.5rem' }}
-            name="newPassword"
-            value={data.newPassword}
+            style={{ flex: 2, marginLeft: '0.5rem' }}
+            name="content"
+            value={data.content}
             onChange={onChange}
             type="text"
-            placeholder="New password"
+            placeholder="Content"
           />
         </div>
         <Mutation
-          mutation={CHANGE_PASSWORD_MUTATION}
-          variables={data}
-          onCompleted={({ changePassword }) => {
-            if (changePassword) {
-              setMessage('Password changed');
+          mutation={CREATE_POST_MUTATION}
+          variables={{ data }}
+          onCompleted={({ createPost }) => {
+            if (createPost.id) {
+              setMessage('Post created');
             }
           }}
           onError={({ graphQLErrors }) => {
@@ -70,8 +80,8 @@ const ChangePassword = () => {
           }}
         >
           {(mutation, { loading }) => (
-            <button className="button" disabled={loading} onClick={mutation}>
-              Change
+            <button className="button" onClick={mutation} disabled={loading}>
+              Create
             </button>
           )}
         </Mutation>
@@ -80,6 +90,6 @@ const ChangePassword = () => {
   );
 };
 
-ChangePassword.title = 'ChangePassword';
+Create.title = 'Create post';
 
-export default ChangePassword;
+export default Create;

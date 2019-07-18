@@ -2,8 +2,8 @@ export const sidebar = [
   {
     section: 'Posts',
     items: [
+      { text: 'Create', link: '/posts/create' },
       { text: 'Feed', link: '/posts' },
-      { text: 'My posts', link: '/posts/my-posts' },
     ],
   },
   {

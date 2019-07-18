@@ -11,6 +11,7 @@ module.exports = {
 
   INCORRECT_PASSWORD: 'Wrong password',
   PASSWORD_TOO_SHORT: `Password too short: ${passwordMinLength} characters at least`,
+  SAME_PASSWORDS: 'Passwords are the same',
 
   USER_NOT_VALIDATED: 'User is not validated',
   USER_ALREADY_VALIDATED: 'User is already validated',

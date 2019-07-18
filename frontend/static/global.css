@@ -64,3 +64,25 @@ button {
     line-height: 3rem;
     padding: 0 1.6rem;
 }
+
+table {
+    width: 100%;
+}
+
+thead {
+    background-color: #f2f2f2;
+    color: #555;
+}
+
+thead tr th {
+    padding: 1rem;
+}
+
+tbody tr {
+    border: 
+}
+
+tbody tr td {
+    padding: 0.8rem;
+    border: 2px solid #f1f1f1;
+}

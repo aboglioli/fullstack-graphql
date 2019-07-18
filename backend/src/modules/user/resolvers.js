@@ -70,6 +70,10 @@ module.exports = {
         throw new Error('PASSWORD_TOO_SHORT');
       }
 
+      if (currentPassword === newPassword) {
+        throw new Error('SAME_PASSWORDS');
+      }
+
       user.password = newPassword;
       await user.save();
 

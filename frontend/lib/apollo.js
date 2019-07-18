@@ -34,7 +34,7 @@ const createClient = (initialState, { ctx } = {}) => {
     fetch: !isBrowser && fetch,
   });
 
-  const errorLink = onError(({ graphQLErrors }) => {
+  const redirectionLink = onError(({ graphQLErrors }) => {
     if (graphQLErrors && graphQLErrors.length > 0) {
       const notLoggedIn = graphQLErrors.some(
         err => err.message === 'NOT_LOGGED_IN',
@@ -52,7 +52,7 @@ const createClient = (initialState, { ctx } = {}) => {
   const client = new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser,
-    link: ApolloLink.from([authLink, errorLink, httpLink]),
+    link: ApolloLink.from([authLink, redirectionLink, httpLink]),
     cache: new InMemoryCache().restore(initialState || {}),
   });
 
