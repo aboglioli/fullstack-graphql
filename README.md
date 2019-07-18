@@ -1,6 +1,6 @@
-# Node < GraphQL > React boilerplate project
+# Node < GraphQL > React starter project
 
-Boilerplate project to start easily a project using Node, GraphQL and React.
+Starter project to start easily a project using Node, GraphQL and React.
 
 It includes **backend** and **frontend** code.
 
@@ -79,20 +79,13 @@ necessary visual managers (GUI) will be started for each service:
 
 ```
 # Starting all the services
-docker-compose \
-  -f docker-compose.mongo.yml \
-  -f docker-compose.postgres.yml \
-  -f docker-compose.redis.yml
-  up -d
+docker-compose up -d
 ```
 
 For example, if you only need mongo and redis, you can run:
 
 ```
-docker-compose \
-  -f docker-compose.mongo.yml \
-  -f docker-compose.redis.yml
-  up -d
+docker-compose mongo-express redis-commander up -d
 ```
 
 And set `useSequelize` as *false* in `backend/src/config.js`.
