@@ -20,9 +20,10 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = () => {
+const Login = ({ ...props }) => {
   const [data, setData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+  console.log(props);
 
   const onChange = e => {
     if (e && e.target) {

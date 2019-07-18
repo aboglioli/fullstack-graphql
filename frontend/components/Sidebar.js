@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const SidebarSection = ({ section, items }) => {
+const SidebarSection = ({ activePathname, section, items }) => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -26,7 +27,7 @@ const SidebarSection = ({ section, items }) => {
         {items.map(({ link, text }, i) => (
           <li key={i} className="sidebar__section__item">
             <Link href={link}>
-              <a>{text}</a>
+              <a className={link === activePathname ? 'active' : ''}>{text}</a>
             </Link>
           </li>
         ))}
@@ -36,12 +37,16 @@ const SidebarSection = ({ section, items }) => {
 };
 
 SidebarSection.propTypes = {
+  activePathname: PropTypes.string.isRequired,
   section: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
 };
 
 const Sidebar = ({ items }) => {
-  return items.map((item, i) => <SidebarSection key={i} {...item} />);
+  const router = useRouter();
+  return items.map((item, i) => (
+    <SidebarSection key={i} {...item} activePathname={router.pathname} />
+  ));
 };
 
 Sidebar.propTypes = {
