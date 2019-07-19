@@ -10,7 +10,7 @@ It includes **backend** and **frontend** code.
 - **Docker**: to run database services.
 - **graphql-yoga**: GraphQL server.
 - **Sequelize**: best ORM for relational databases (PostgreSQL, MySQL, MariaDB,
-  etc.).
+  etc.). Requires extra configuration and dependencies.
 - **Mongoose**: ODM for MongoDB, with schemas support.
 - **Redis**: key-value database.
 - **Jest**: unit and integration testing.
@@ -20,11 +20,12 @@ modules (*GraphQL schemas and resolvers*) easily.
 
 ## Frontend
 
+- **Next.js**: Server side rendering framework.
 - **React**: UI library. With hooks support!
-- **react-apollo**: GraphQL library for React.
-- **react-router**.
+- **@apollo/react-hooks**: GraphQL library for React using hooks (useQuery,
+  useMutation, useSuscription).
 - **FontAwesome**: for icons.
-- **Basic dashboard structure**: made with CSS Grid, FontAwesome and react-router.
+- **Basic dashboard structure**: made with CSS Grid, FontAwesome, react-router and @apollo/react-hooks.
 
 ![Dashboard](docs/dashboard.png)
 
@@ -47,45 +48,34 @@ new connection to mongo will be made and all the data will be stored in
 
 The **frontend** is ready to be used.
 
-**Backend** requires some extra configuration.
+The **backend** uses [MongoDB](https://www.mongodb.com/) as main database and
+redis as a key-value store.
 
-First of all, [Sequelize](http://docs.sequelizejs.com/) and
-[Mongoose](https://mongoosejs.com/docs/) have been used as ORMs for PostgreSQL
-and Mongo. In `backend/src/db.js` there is a wrapper over `db-sequelize` and
-`db-mongo`. By default both libraries are used and two connections are made: one
-to a PostgreSQL instance and one to a MongoDB instance. In
-`backend/src/config.js` you can configure which library to use, setting
-`useSequelize` and `useMongo` respectively.
+Models are loaded into `models` object of `db/index.js` and they are passed in
+context to be available inside each resolver of the application.
 
-Models are loaded into `models` object of `db.js` and they are passed in context
-to be available inside each resolver of the application.
+If you want to use Sequelize ORM with Postgres you must delete `src/db` folder
+and rename `src/db-sequelize` to `src/db`. By this way you replace *mongoose*
+models by *Sequelize* models.
 
-In `models` you will have both models of Sequelize and Mongoose. So be careful
-about what method to call. There is a little example about User, Post and
-Category.
-
-A DataLoader for Sequelize has been configured too. It improves perfomance when
-there are subsequent queries.
+Sequelize works great with a custom DataLoader. 
 
 ## Set up the databases
 
 The entire environment can run on Docker. It's recommended.
 
-Each service can be set up from *docker-compose* configuration files. There is
-three files to start containers of: **mongo**, **postgres** and **redis**. The
+Each service can be set up from *docker-compose* configuration files. There are
+two files to start containers of: **mongo**, **postgres** and **redis**. The
 necessary visual managers (GUI) will be started for each service:
 *mongo-express* to manage mongo, *pgadmin* to manage PostgreSQL and
 *redis-commander* to manage Redis. The three managers are web based.
 
 ```
-# Starting all the services
+# Starting mongo, mongo-express, redis and redis-commander
 docker-compose up -d
 ```
 
-For example, if you only need mongo and redis, you can run:
-
 ```
-docker-compose mongo-express redis-commander up -d
+# Starting postgres too
+docker-compose -f docker-compose.yml -f docker-compose.postgres.yml up -d
 ```
-
-And set `useSequelize` as *false* in `backend/src/config.js`.
