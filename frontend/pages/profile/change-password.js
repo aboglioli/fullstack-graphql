@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Message from '../../components/Message';
@@ -15,6 +15,20 @@ const ChangePassword = () => {
   const [data, setData] = useState({ currentPassword: '', newPassword: '' });
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+
+  const [mutation, { loading }] = useMutation(CHANGE_PASSWORD_MUTATION, {
+    variables: data,
+    onCompleted: ({ changePassword }) => {
+      if (changePassword) {
+        setMessage('Password changed');
+      }
+    },
+    onError: ({ graphQLErrors }) => {
+      if (graphQLErrors.length > 0) {
+        setError(graphQLErrors[0].message);
+      }
+    },
+  });
 
   const onChange = e => {
     if (e && e.target) {
@@ -55,26 +69,9 @@ const ChangePassword = () => {
             placeholder="New password"
           />
         </div>
-        <Mutation
-          mutation={CHANGE_PASSWORD_MUTATION}
-          variables={data}
-          onCompleted={({ changePassword }) => {
-            if (changePassword) {
-              setMessage('Password changed');
-            }
-          }}
-          onError={({ graphQLErrors }) => {
-            if (graphQLErrors.length > 0) {
-              setError(graphQLErrors[0].message);
-            }
-          }}
-        >
-          {(mutation, { loading }) => (
-            <button className="button" disabled={loading} onClick={mutation}>
-              Change
-            </button>
-          )}
-        </Mutation>
+        <button className="button" disabled={loading} onClick={mutation}>
+          Change
+        </button>
       </div>
     </>
   );

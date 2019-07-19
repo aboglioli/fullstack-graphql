@@ -45,7 +45,11 @@ SidebarSection.propTypes = {
 const Sidebar = ({ items }) => {
   const router = useRouter();
   return items.map((item, i) => (
-    <SidebarSection key={i} {...item} activePathname={router.pathname} />
+    <SidebarSection
+      key={i}
+      {...item}
+      activePathname={router ? router.pathname : ''}
+    />
   ));
 };
 

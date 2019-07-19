@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import { login } from '../utils/auth';
@@ -20,22 +20,29 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Login = ({ ...props }) => {
+const Login = () => {
   const [data, setData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
-  console.log(props);
+
+  const [mutation, { loading }] = useMutation(LOGIN_MUTATION, {
+    variables: data,
+    onError: ({ graphQLErrors }) => {
+      if (graphQLErrors.length > 0) {
+        setError(graphQLErrors[0].message);
+      }
+    },
+    onCompleted: data => {
+      if (data && data.login) {
+        const { token } = data.login;
+        login(token);
+      }
+    },
+  });
 
   const onChange = e => {
     if (e && e.target) {
       setData({ ...data, [e.target.name]: e.target.value });
       setError('');
-    }
-  };
-
-  const confirm = data => {
-    if (data && data.login) {
-      const { token } = data.login;
-      login(token);
     }
   };
 
@@ -78,22 +85,9 @@ const Login = ({ ...props }) => {
           <Link href="/signup">
             <a>Sign up</a>
           </Link>
-          <Mutation
-            mutation={LOGIN_MUTATION}
-            variables={data}
-            onCompleted={confirm}
-            onError={({ graphQLErrors }) => {
-              if (graphQLErrors.length > 0) {
-                setError(graphQLErrors[0].message);
-              }
-            }}
-          >
-            {(mutation, { loading }) => (
-              <button className="button" disabled={loading} onClick={mutation}>
-                Log in
-              </button>
-            )}
-          </Mutation>
+          <button className="button" disabled={loading} onClick={mutation}>
+            Log in
+          </button>
         </div>
       </div>
     </div>
