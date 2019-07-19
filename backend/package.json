@@ -1,9 +1,9 @@
 {
-  "name": "turnalia-server",
+  "name": "fullstack-graphql",
   "version": "0.0.1",
   "description": "Sistema de turnos",
   "main": "src/index.js",
-  "repository": "git@github.com:aboglioli/turnalia-server.git",
+  "repository": "https://github.com/aboglioli/fullstack-graphql",
   "author": "Alan Boglioli <alan.boglioli@gmail.com>",
   "license": "MIT",
   "private": true,
