@@ -1,10 +1,12 @@
 import React from 'react';
-import { ApolloConsumer } from 'react-apollo';
+import { useApolloClient } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { logout } from '../utils/auth';
 
 const Toolbar = () => {
+  const client = useApolloClient();
+
   return (
     <div
       style={{
@@ -13,24 +15,20 @@ const Toolbar = () => {
         width: '100%',
       }}
     >
-      <ApolloConsumer>
-        {client => (
-          <button
-            style={{
-              background: 'none',
-              border: 'none',
-              padding: '0 1rem',
-            }}
-            onClick={async () => {
-              await client.clearStore();
-              await client.resetStore();
-              logout();
-            }}
-          >
-            <FontAwesomeIcon icon="power-off" />
-          </button>
-        )}
-      </ApolloConsumer>
+      <button
+        style={{
+          background: 'none',
+          border: 'none',
+          padding: '0 1rem',
+        }}
+        onClick={async () => {
+          await client.clearStore();
+          await client.resetStore();
+          logout();
+        }}
+      >
+        <FontAwesomeIcon icon="power-off" />
+      </button>
     </div>
   );
 };

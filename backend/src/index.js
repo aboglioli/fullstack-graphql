@@ -4,13 +4,10 @@ const db = require('./db');
 (async () => {
   // Connect to DBs
   try {
-    const connectedDbs = await db.connect();
-    console.log(
-      '[DATABASE] Connected to:',
-      connectedDbs.map(db => db.name).join(', '),
-    );
+    await db.connect();
+    console.log('[MONGO] Connected');
   } catch (err) {
-    console.log(`[DATABASE] Error: ${err}`);
+    console.log(`[MONGO] Error: ${err}`);
   }
 
   const app = await startServer();

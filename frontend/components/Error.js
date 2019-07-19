@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Message from './Message';
@@ -15,22 +15,19 @@ const ERRORS_QUERY = gql`
 `;
 
 const Error = ({ code }) => {
-  return (
-    <Query query={ERRORS_QUERY}>
-      {({ data, loading, error }) => {
-        if (loading) return <b>Loading...</b>;
-        if (error) return <b>Error</b>;
+  const { data, loading, error } = useQuery(ERRORS_QUERY);
 
-        error = data.errors.find(error => error.code === code);
+  if (loading) {
+    return <b>Loading...</b>;
+  }
 
-        return (
-          <Message error>
-            {code && error ? error.message : 'Unknown error'}
-          </Message>
-        );
-      }}
-    </Query>
-  );
+  if (error) {
+    return <b>Error</b>;
+  }
+
+  const err = data.errors.find(error => error.code === code);
+
+  return <Message error>{code && err ? err.message : 'Unknown error'}</Message>;
 };
 
 Error.propTypes = {

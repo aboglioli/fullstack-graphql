@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Error from '../components/Error';
@@ -26,16 +26,24 @@ const Signup = () => {
   });
   const [error, setError] = useState('');
 
+  const [mutation, { loading }] = useMutation(SIGNUP_MUTATION, {
+    variables: { data },
+    onError: ({ graphQLErrors }) => {
+      if (graphQLErrors.length > 0) {
+        setError(graphQLErrors[0].message);
+      }
+    },
+    onCompleted: data => {
+      if (data && data.signup) {
+        Router.push('/login');
+      }
+    },
+  });
+
   const onChange = e => {
     if (e && e.target) {
       setData({ ...data, [e.target.name]: e.target.value });
       setError('');
-    }
-  };
-
-  const confirm = data => {
-    if (data && data.signup) {
-      Router.push('/login');
     }
   };
 
@@ -94,22 +102,9 @@ const Signup = () => {
           <Link href="/login">
             <a>Log in</a>
           </Link>
-          <Mutation
-            mutation={SIGNUP_MUTATION}
-            variables={{ data }}
-            onCompleted={confirm}
-            onError={({ graphQLErrors }) => {
-              if (graphQLErrors.length > 0) {
-                setError(graphQLErrors[0].message);
-              }
-            }}
-          >
-            {(mutation, { loading }) => (
-              <button className="button" disabled={loading} onClick={mutation}>
-                Sign up
-              </button>
-            )}
-          </Mutation>
+          <button className="button" disabled={loading} onClick={mutation}>
+            Sign up
+          </button>
         </div>
       </div>
     </div>

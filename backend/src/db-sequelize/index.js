@@ -1,3 +1,9 @@
+/**
+ * This file is not being used.
+ * It requires extra configuration in context.js (GraphQL context), adding a
+ * DataLoader and setting up tests/server.js.
+ */
+
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');

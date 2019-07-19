@@ -1,5 +1,5 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import withAuth from '../../lib/with-auth';
@@ -17,38 +17,23 @@ const ME_QUERY = gql`
 `;
 
 const Profile = () => {
+  const { data, loading, error } = useQuery(ME_QUERY);
+
+  if (loading) return <b>Loading...</b>;
+  if (error) return <Error code={error.graphQLErrors[0].message} />;
+
+  const { me: user } = data;
+
   return (
     <>
       <h1>Profile</h1>
       <div className="box">
-        <Query query={ME_QUERY}>
-          {({ data, loading, error }) => {
-            if (loading) return <b>Loading...</b>;
-            if (error)
-              return (
-                <Error
-                  code={
-                    error.graphQLErrors.length > 0
-                      ? error.graphQLErrors[0].message
-                      : ''
-                  }
-                />
-              );
-
-            const { me: user } = data;
-
-            return (
-              <>
-                <h3>Username</h3>
-                <p>{user.username}</p>
-                <h3>Name</h3>
-                <p>{user.name}</p>
-                <h3>Email</h3>
-                <p>{user.email}</p>
-              </>
-            );
-          }}
-        </Query>
+        <h3>Username</h3>
+        <p>{user.username}</p>
+        <h3>Name</h3>
+        <p>{user.name}</p>
+        <h3>Email</h3>
+        <p>{user.email}</p>
       </div>
     </>
   );

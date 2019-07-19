@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 
 const config = require('../src/config');
 const db = require('../src/db');
+const Redis = require('../src/redis');
 const startServer = require('../src/server');
 
 class Server {
@@ -15,20 +16,17 @@ class Server {
 
   stop() {
     if (this.app) this.app.close();
-
-    if (this.dbs && this.dbs.length > 0) {
-      this.dbs.forEach(db => db.connection.close());
-    }
+    if (this.mongoConnection) this.mongoConnection.close();
+    if (Redis.disconnect) Redis.disconnect();
   }
 
   async connectDb(prefix = '') {
     if (prefix) {
       config.mongoDatabase += `-${prefix}`;
-      config.sequelizeDatabase += `-${prefix}`;
     }
 
-    // Reset DBs
-    this.dbs = await db.connect({ reset: true });
+    this.mongoConnection = await db.connect({ reset: true });
+    await Redis.flushall();
   }
 
   async login(username, password) {

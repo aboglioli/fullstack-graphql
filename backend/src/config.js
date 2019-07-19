@@ -10,14 +10,12 @@ const config = {
     validateUser: false,
     passwordMinLength: 6,
 
-    useMongo: true, // enable Mongo (mongoose)
     mongoHost: process.env.MONGO_HOST,
     mongoPort: process.env.MONGO_PORT,
     mongoDatabase: process.env.MONGO_DATABASE,
     mongoUser: process.env.MONGO_USER,
     mongoPassword: process.env.MONGO_PASSWORD,
 
-    useSequelize: true, // enable PostgreSQL (Sequelize)
     sequelizeDialect: process.env.SEQUELIZE_DIALECT,
     sequelizeHost: process.env.SEQUELIZE_HOST,
     sequelizePort: process.env.SEQUELIZE_PORT,
