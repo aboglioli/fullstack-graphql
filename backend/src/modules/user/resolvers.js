@@ -80,11 +80,6 @@ module.exports = {
       return true;
     },
   },
-  User: {
-    posts(user, args, { models }) {
-      return models.Post.findAll({ where: { userId: user.id } });
-    },
-  },
   AuthPayload: {
     user({ user }, args, { models }) {
       return models.User.findById(user.id);

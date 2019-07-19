@@ -6,7 +6,6 @@ type User {
   active: Boolean @auth(roles: [ADMIN])
   validated: Boolean @auth(roles: [ADMIN])
   role: Role!
-  posts: [Post!]!
   createdAt: Date!
   updatedAt: Date!
 }
