@@ -27,7 +27,10 @@ module.exports = {
         throw new Error('PASSWORD_TOO_SHORT');
       }
 
-      const user = await models.User.create({ ...data, validated: !config.validateUser });
+      const user = await models.User.create({
+        ...data,
+        validated: !config.validateUser,
+      });
 
       // Generate validation code
       if (config.validateUser) {
