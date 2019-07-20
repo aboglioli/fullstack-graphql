@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { auth } from '../lib/auth';
+import { auth } from './auth';
 
 const withAuth = WrappedComponent => {
   return class WithAuth extends Component {
