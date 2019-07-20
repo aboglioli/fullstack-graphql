@@ -27,11 +27,13 @@ module.exports = {
         throw new Error('PASSWORD_TOO_SHORT');
       }
 
-      const user = await models.User.create(data);
+      const user = await models.User.create({ ...data, validated: !config.validateUser });
 
       // Generate validation code
-      const code = generateValidationCode();
-      await models.Redis.set(`validate-user:${user.id}`, code);
+      if (config.validateUser) {
+        const code = generateValidationCode();
+        await models.Redis.set(`validate-user:${user.id}`, code);
+      }
 
       return user;
     },

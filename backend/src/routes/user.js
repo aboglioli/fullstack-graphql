@@ -1,26 +1,13 @@
+const { validateUser } = require('../config');
 const { models } = require('../db');
-const { generateValidationCode } = require('../utils/user');
-
-const getUser = async userId => {
-  let user;
-  try {
-    user = await models.User.findById(userId);
-  } catch (err) {
-    throw new Error('USER_NOT_EXIST');
-  }
-
-  if (!user) {
-    throw new Error('USER_NOT_EXIST');
-  }
-
-  if (user.validated) {
-    throw new Error('USER_ALREADY_VALIDATED');
-  }
-
-  return user;
-};
+const { getUserById, generateValidationCode } = require('../utils/user');
 
 const validate = async (req, res) => {
+  if (!validateUser) {
+    res.send('VALIDATION_NOT_ACTIVE');
+    return;
+  }
+
   const { userId } = req.params;
   const { code } = req.query;
 
@@ -33,7 +20,7 @@ const validate = async (req, res) => {
   // Check user
   let user;
   try {
-    user = await getUser(userId);
+    user = await getUserById(userId);
   } catch (err) {
     res.send(err.message);
     return;
@@ -57,6 +44,11 @@ const validate = async (req, res) => {
 };
 
 const generateCode = async (req, res) => {
+  if (!validateUser) {
+    res.send('VALIDATION_NOT_ACTIVE');
+    return;
+  }
+
   const { userId } = req.params;
 
   if (!userId) {
@@ -65,7 +57,7 @@ const generateCode = async (req, res) => {
   }
 
   try {
-    await getUser(userId);
+    await getUserById(userId);
   } catch (err) {
     res.send(err.message);
     return;

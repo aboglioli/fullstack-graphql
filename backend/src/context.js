@@ -1,5 +1,5 @@
 const { models } = require('./db');
-const { getUser } = require('./utils/user');
+const { getUserByToken } = require('./utils/user');
 
 module.exports = ({ request }) => {
   let ctx = {};
@@ -8,7 +8,7 @@ module.exports = ({ request }) => {
   const authorization = request && request.get('Authorization');
   if (authorization && authorization.startsWith('Bearer ')) {
     const token = authorization.replace('Bearer ', '');
-    const user = getUser(token);
+    const user = getUserByToken(token);
 
     if (token && user) {
       ctx = { ...ctx, token, user };
