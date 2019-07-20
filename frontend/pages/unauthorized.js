@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
-import Router from 'next/router';
+import React from 'react';
+import Link from 'next/link';
 import cookie from 'js-cookie';
 
 const Unauthorized = () => {
-  useEffect(() => {
-    setTimeout(() => {
-      cookie.remove('token');
-      Router.push('/login');
-    }, 3000);
-  });
+  cookie.remove('token');
 
   return (
     <div
@@ -19,7 +14,15 @@ const Unauthorized = () => {
         justifyContent: 'center',
       }}
     >
-      <b>Unauthorized</b>
+      <div className="box">
+        <h2>Unauthorized</h2>
+        <p>
+          Please{' '}
+          <Link href="/login">
+            <a>Log in</a>
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
