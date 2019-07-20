@@ -2,7 +2,7 @@ import React from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { logout } from '../utils/auth';
+import { logout } from '../lib/auth';
 
 const Toolbar = () => {
   const client = useApolloClient();

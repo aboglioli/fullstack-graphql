@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import { login } from '../utils/auth';
+import { login } from '../lib/auth';
 import Error from '../components/Error';
 
 const LOGIN_MUTATION = gql`

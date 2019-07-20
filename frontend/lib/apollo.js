@@ -7,7 +7,7 @@ import { onError } from 'apollo-link-error';
 import fetch from 'isomorphic-unfetch';
 import nextCookies from 'next-cookies';
 
-import { redirect } from '../utils/auth';
+import { redirect } from '../lib/auth';
 
 let apolloClient = null;
 const isBrowser = typeof window !== 'undefined';
