@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 const config = require('../config');
+const Redis = require('../redis');
 
 const basename = path.basename(__filename);
 
@@ -51,5 +52,5 @@ module.exports = {
 
     return connection;
   },
-  models,
+  models: { ...models, Redis },
 };

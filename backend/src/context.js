@@ -1,5 +1,4 @@
 const { models } = require('./db');
-const Redis = require('./redis');
 const { getUser } = require('./utils/user');
 
 module.exports = ({ request }) => {
@@ -19,6 +18,6 @@ module.exports = ({ request }) => {
   return {
     ...ctx,
     request,
-    models: { ...models, Redis },
+    models,
   };
 };
