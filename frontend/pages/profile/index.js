@@ -6,7 +6,7 @@ import withAuth from '../../lib/with-auth';
 import Error from '../../components/Error';
 
 const ME_QUERY = gql`
-  query me {
+  {
     me {
       id
       username
