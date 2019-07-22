@@ -1,0 +1,13 @@
+{
+  "name": "fullstack-graphql",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Fullstack GraphQL: Node + React + GraphQL",
+  "repository": "https://github.com/aboglioli/fullstack-graphql",
+  "author": "Alan Boglioli <alan.boglioli@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
+}
