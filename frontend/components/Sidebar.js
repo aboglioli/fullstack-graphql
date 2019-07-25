@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Sidebar.scss';
+import LayoutContext from './LayoutContext';
 
-const SidebarSection = ({ activePathname, section, items }) => {
-  const [open, setOpen] = useState(true);
-
+const SidebarSection = ({ section, activePathname, toggleSidebarSection }) => {
+  const { section: name, items, open } = section;
   return (
     <div className="sidebar__section">
-      <h5 className="sidebar__section__title" onClick={() => setOpen(!open)}>
-        <span>{section}</span>
+      <h5 className="sidebar__section__title" onClick={toggleSidebarSection}>
+        <span>{name}</span>
         <span>
           {open ? (
             <FontAwesomeIcon icon="chevron-circle-up" />
@@ -39,24 +39,23 @@ const SidebarSection = ({ activePathname, section, items }) => {
 };
 
 SidebarSection.propTypes = {
+  section: PropTypes.object.isRequired,
   activePathname: PropTypes.string.isRequired,
-  section: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
+  toggleSidebarSection: PropTypes.func.isRequired,
 };
 
-const Sidebar = ({ items }) => {
+const Sidebar = () => {
+  const { sidebar, toggleSidebarSection } = useContext(LayoutContext);
   const router = useRouter();
-  return items.map((item, i) => (
+
+  return sidebar.map((section, i) => (
     <SidebarSection
       key={i}
-      {...item}
+      section={section}
       activePathname={router ? router.pathname : ''}
+      toggleSidebarSection={() => toggleSidebarSection(i)}
     />
   ));
-};
-
-Sidebar.propTypes = {
-  items: PropTypes.array.isRequired,
 };
 
 export default Sidebar;

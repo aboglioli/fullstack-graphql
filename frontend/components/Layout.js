@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import LayoutContext from './LayoutContext';
+
 const Layout = ({ logo, toolbar, sidebar, children, footer }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { sidebarOpen, toggleSidebar } = useContext(LayoutContext);
 
   return (
     <div className="container">
       <header className="toolbar">
-        <button
-          className="toolbar__closebtn"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
+        <button className="toolbar__closebtn" onClick={toggleSidebar}>
           <FontAwesomeIcon icon="bars" />
         </button>
         {toolbar}

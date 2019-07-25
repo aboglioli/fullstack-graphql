@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import withAuth from '../../lib/with-auth';
+import Dashboard from '../../components/Dashboard';
 import Error from '../../components/Error';
 
 const ME_QUERY = gql`
@@ -25,7 +26,7 @@ const Profile = () => {
   const { me: user } = data;
 
   return (
-    <>
+    <Dashboard title="Profile">
       <h1>Profile</h1>
       <div className="box">
         <h3>Username</h3>
@@ -35,10 +36,8 @@ const Profile = () => {
         <h3>Email</h3>
         <p>{user.email}</p>
       </div>
-    </>
+    </Dashboard>
   );
 };
-
-Profile.title = 'Profile';
 
 export default withAuth(Profile);

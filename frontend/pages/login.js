@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import { login } from '../lib/auth';
+import Base from '../components/Base';
 import Error from '../components/Error';
 
 const LOGIN_MUTATION = gql`
@@ -47,54 +48,53 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <div className="box" style={{ width: '400px' }}>
-        <h2>Login</h2>
-        {error && <Error code={error} />}
-        <input
-          className="input"
-          name="username"
-          value={data.username}
-          onChange={onChange}
-          type="text"
-          placeholder="Username"
-        />
-        <input
-          className="input"
-          name="password"
-          value={data.password}
-          onChange={onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <div
-          style={{
-            marginTop: '1rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Link href="/signup">
-            <a>Sign up</a>
-          </Link>
-          <button className="button" disabled={loading} onClick={mutation}>
-            Log in
-          </button>
+    <Base title="Log in">
+      <div
+        style={{
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div className="box" style={{ width: '400px' }}>
+          <h2>Login</h2>
+          {error && <Error code={error} />}
+          <input
+            className="input"
+            name="username"
+            value={data.username}
+            onChange={onChange}
+            type="text"
+            placeholder="Username"
+          />
+          <input
+            className="input"
+            name="password"
+            value={data.password}
+            onChange={onChange}
+            type="password"
+            placeholder="Password"
+          />
+          <div
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Link href="/signup">
+              <a>Sign up</a>
+            </Link>
+            <button className="button" disabled={loading} onClick={mutation}>
+              Log in
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Base>
   );
 };
-
-Login.title = 'Log in';
-Login.disableDashboard = true;
 
 export default Login;

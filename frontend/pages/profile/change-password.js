@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
+import Dashboard from '../../components/Dashboard';
 import Message from '../../components/Message';
 import Error from '../../components/Error';
 
@@ -39,7 +40,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <>
+    <Dashboard title="Change Password">
       <h1>Change password</h1>
       <div className="box">
         {error && <Error code={error} />}
@@ -73,10 +74,8 @@ const ChangePassword = () => {
           Change
         </button>
       </div>
-    </>
+    </Dashboard>
   );
 };
-
-ChangePassword.title = 'ChangePassword';
 
 export default ChangePassword;
