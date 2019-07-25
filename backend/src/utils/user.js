@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
+const uuid = require('uuid/v4');
 
 const { models } = require('../db');
-
 const { jwtSecret } = require('../config');
 
-const getUserByToken = token => {
+const getSessionId = token => {
   try {
-    return jwt.verify(token, jwtSecret);
+    const { sessionId } = jwt.verify(token, jwtSecret);
+    return sessionId;
   } catch (err) {
     return null;
   }
@@ -31,18 +32,21 @@ const getUserById = async userId => {
   return user;
 };
 
+const generateSessionId = uuid;
+
 const generateValidationCode = () =>
   Math.random()
     .toString()
     .slice(2, 10);
 
-const generateAuthToken = user => {
-  return jwt.sign({ id: user.id }, jwtSecret);
+const generateAuthToken = sessionId => {
+  return jwt.sign({ sessionId }, jwtSecret);
 };
 
 module.exports = {
-  getUserByToken,
+  getSessionId,
   getUserById,
+  generateSessionId,
   generateValidationCode,
   generateAuthToken,
 };

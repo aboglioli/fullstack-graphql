@@ -1,17 +1,18 @@
 const { models } = require('./db');
-const { getUserByToken } = require('./utils/user');
+const { getSessionId } = require('./utils/user');
 
-module.exports = ({ request }) => {
+module.exports = async ({ request }) => {
   let ctx = {};
 
   // Get Authorization token
   const authorization = request && request.get('Authorization');
   if (authorization && authorization.startsWith('Bearer ')) {
     const token = authorization.replace('Bearer ', '');
-    const user = getUserByToken(token);
+    const sessionId = getSessionId(token);
 
-    if (token && user) {
-      ctx = { ...ctx, token, user };
+    if (token && sessionId) {
+      const userId = await models.Redis.get(`session:${sessionId}`);
+      ctx = { ...ctx, user: { id: userId } };
     }
   }
 

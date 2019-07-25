@@ -37,7 +37,7 @@ const Profile = () => {
         <h3>Email</h3>
         <p>{user.email}</p>
         <p>
-          <Link href="/profile/change-password">Change password</Link>
+          <Link href="/profile/change-password"><a>Change password</a></Link>
         </p>
       </div>
     </Dashboard>

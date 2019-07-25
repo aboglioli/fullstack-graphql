@@ -1,5 +1,6 @@
 const config = require('../../config');
 const {
+  generateSessionId,
   generateValidationCode,
   generateAuthToken,
 } = require('../../utils/user');
@@ -55,7 +56,10 @@ module.exports = {
         throw new Error('LOGIN_INVALID');
       }
 
-      const token = generateAuthToken(user);
+      const sessionId = generateSessionId();
+      await models.Redis.set(`session:${sessionId}`, user.id);
+
+      const token = generateAuthToken(sessionId);
 
       return { user, token };
     },
