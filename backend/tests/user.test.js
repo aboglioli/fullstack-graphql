@@ -2,6 +2,7 @@ const { GraphQLClient } = require('graphql-request');
 const gql = require('graphql-tag');
 const Server = require('./server');
 const { models } = require('../src/db');
+const { getSessionId } = require('../src/utils/user');
 const { checkError } = Server;
 
 const ME_QUERY = gql`
@@ -153,6 +154,19 @@ describe('User', () => {
     expect(user.username).toBe(newUser.username);
     expect(user.name).toBe(newUser.name);
     expect(user.email).toBe(newUser.email);
+  });
+
+  test('Save session after logging in', async () => {
+    const {
+      login: { user, token },
+    } = await server.request(LOGIN_MUTATION, {
+      username: newUser.username,
+      password: newUser.password,
+    });
+
+    const sessionId = getSessionId(token);
+    const userId = await models.Redis.get(`session:${sessionId}`);
+    expect(user.id).toBe(userId);
   });
 
   test('Query "me"', async () => {
