@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { getDataFromTree } from '@apollo/react-ssr';
 
 import initApollo from './apollo';
+import { redirect } from './auth';
 
 const withApollo = App => {
   return class WithApollo extends Component {
@@ -46,6 +47,7 @@ const withApollo = App => {
           );
         } catch (err) {
           console.error('getDataFromTree:', err);
+          return redirect('/unauthorized', res);
         }
 
         // getDataFromTree does not call componentWillUnmount
