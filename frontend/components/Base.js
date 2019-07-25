@@ -9,8 +9,6 @@ const Base = ({ title, children }) => {
         <title>{title} | fullstack-graphql</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
-
-        <link href="/static/global.css" rel="stylesheet" />
       </Head>
       {children}
     </>

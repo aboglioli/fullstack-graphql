@@ -2,6 +2,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 
+import './global.scss';
 import '../lib/icons';
 import withApollo from '../lib/with-apollo';
 import Base from '../components/Base';

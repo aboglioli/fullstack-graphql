@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import './Sidebar.scss';
+
 const SidebarSection = ({ activePathname, section, items }) => {
   const [open, setOpen] = useState(true);
 
