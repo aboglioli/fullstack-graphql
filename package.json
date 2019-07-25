@@ -6,6 +6,11 @@
   "repository": "https://github.com/aboglioli/fullstack-graphql",
   "author": "Alan Boglioli <alan.boglioli@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "backend:lint": "cd backend && yarn lint",
+    "frontend:lint": "cd frontend && yarn lint",
+    "lint": "yarn backend:lint && yarn frontend:lint"
+  },
   "workspaces": [
     "backend",
     "frontend"

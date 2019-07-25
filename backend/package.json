@@ -12,7 +12,7 @@
     "dev": "cross-env NODE_ENV=development nodemon -e js,graphql -x node src/index.js",
     "debug": "cross-env NODE_ENV=development nodemon -e js,graphql -x node --inspect src/index.js",
     "playground": "graphql playground",
-    "lint": "eslint --fix src/ tests/",
+    "lint": "eslint --fix src tests",
     "test": "cross-env NODE_ENV=test jest src tests",
     "test:watch": "cross-env NODE_ENV=test jest --watch src tests",
     "coverage": "cross-env NODE_ENV=test jest --collectCoverageFrom=src/**.js --coverage test"
