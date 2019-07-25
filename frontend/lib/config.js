@@ -1,7 +1,9 @@
 const mergeConfig = (env1, env2) => ({ ...env1, ...env2 });
 
 const config = {
-  development: {},
+  development: {
+    title: 'fullstack-graphql',
+  },
   test: {},
   production: {},
 };

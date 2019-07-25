@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Link from 'next/link';
 
 import withAuth from '../../lib/with-auth';
 import Dashboard from '../../components/Dashboard';
@@ -35,6 +36,9 @@ const Profile = () => {
         <p>{user.name}</p>
         <h3>Email</h3>
         <p>{user.email}</p>
+        <p>
+          <Link href="/profile/change-password">Change password</Link>
+        </p>
       </div>
     </Dashboard>
   );

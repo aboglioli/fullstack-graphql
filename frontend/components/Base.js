@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
+import config from '../lib/config';
+
 const Base = ({ title, children }) => {
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>
+          {title} | {config.title}
+        </title>
       </Head>
       {children}
     </>

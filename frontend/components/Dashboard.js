@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 
 import './Dashboard.scss';
+import config from '../lib/config';
 import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
 import Layout from './Layout';
@@ -11,7 +12,9 @@ const Dashboard = ({ title, children }) => {
   return (
     <>
       <Head>
-        <title>{title} | fullstack-graphql</title>
+        <title>
+          {title} | {config.title}
+        </title>
       </Head>
       <Layout
         logo="fullstack-graphql"
