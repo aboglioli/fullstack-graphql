@@ -12,7 +12,8 @@ module.exports = async ({ request }) => {
 
     if (token && sessionId) {
       const userId = await models.Redis.get(`session:${sessionId}`);
-      ctx = { ...ctx, user: { id: userId } };
+      const user = await models.User.findById(userId);
+      ctx = { ...ctx, user };
     }
   }
 
