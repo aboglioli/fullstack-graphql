@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import withAuth from '../lib/with-auth';
-import Dashboard from '../components/Dashboard';
+import Head from '../components/Head';
 import Error from '../components/Error';
 
 const META_QUERY = gql`
@@ -25,7 +25,7 @@ const Meta = () => {
   const { meta } = data;
 
   return (
-    <Dashboard title="Meta">
+    <Head title="Meta">
       <h1>Meta</h1>
       <div className="box">
         <h3>Author</h3>
@@ -35,7 +35,7 @@ const Meta = () => {
         <h3>Uptime</h3>
         <p>{meta.uptime}</p>
       </div>
-    </Dashboard>
+    </Head>
   );
 };
 

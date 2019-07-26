@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import Base from '../components/Base';
+import Head from '../components/Head';
 import Error from '../components/Error';
 
 const SIGNUP_MUTATION = gql`
@@ -49,7 +49,7 @@ const Signup = () => {
   };
 
   return (
-    <Base title="Sign up">
+    <Head title="Sign up">
       <div
         style={{
           height: '100vh',
@@ -110,7 +110,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
-    </Base>
+    </Head>
   );
 };
 

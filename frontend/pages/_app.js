@@ -7,6 +7,7 @@ import './global.scss';
 import '../lib/icons';
 import withApollo from '../lib/with-apollo';
 import LayoutContext from '../components/LayoutContext';
+import Dashboard from '../components/Dashboard';
 
 const sidebar = [
   {
@@ -21,6 +22,8 @@ const sidebar = [
     items: [{ text: 'Meta', link: '/meta' }],
   },
 ];
+
+const disableDashboard = ['/login', '/signup', '/unauthorized'];
 
 class MyApp extends App {
   state = {
@@ -47,7 +50,8 @@ class MyApp extends App {
   };
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, pageProps, apolloClient, router } = this.props;
+    const { pathname } = router;
     return (
       <Container>
         <Head>
@@ -62,7 +66,13 @@ class MyApp extends App {
               toggleSidebarSection: this.toggleSidebarSection,
             }}
           >
-            <Component {...pageProps} />
+            {disableDashboard.includes(pathname) ? (
+              <Component {...pageProps} />
+            ) : (
+              <Dashboard>
+                <Component {...pageProps} />
+              </Dashboard>
+            )}
           </LayoutContext.Provider>
         </ApolloProvider>
       </Container>
