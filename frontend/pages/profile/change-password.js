@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import Head from '../../components/Head';
+import Container from '../../components/Container';
 import Message from '../../components/Message';
 import Error from '../../components/Error';
 
@@ -40,7 +40,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <Head title="Change Password">
+    <Container title="Change Password">
       <h1>Change password</h1>
       <div className="box">
         {error && <Error code={error} />}
@@ -74,7 +74,7 @@ const ChangePassword = () => {
           Change
         </button>
       </div>
-    </Head>
+    </Container>
   );
 };
 

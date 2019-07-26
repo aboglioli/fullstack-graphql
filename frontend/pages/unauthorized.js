@@ -2,13 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import cookie from 'js-cookie';
 
-import Head from '../components/Head';
+import Container from '../components/Container';
 
 const Unauthorized = () => {
   cookie.remove('token');
 
   return (
-    <Head title="Unauthorized">
+    <Container title="Unauthorized">
       <div
         style={{
           height: '100vh',
@@ -27,7 +27,7 @@ const Unauthorized = () => {
           </p>
         </div>
       </div>
-    </Head>
+    </Container>
   );
 };
 

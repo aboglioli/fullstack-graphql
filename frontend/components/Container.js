@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NextHead from 'next/head';
+import Head from 'next/head';
 
 import config from '../lib/config';
 
-const Head = ({ title, children }) => (
+const Container = ({ title, children }) => (
   <>
-    <NextHead>
+    <Head>
       <title>
         {title} | {config.title}
       </title>
-    </NextHead>
+    </Head>
     {children}
   </>
 );
 
-Head.propTypes = {
+Container.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
-export default Head;
+export default Container;

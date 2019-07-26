@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import Link from 'next/link';
 
 import withAuth from '../../lib/with-auth';
-import Head from '../../components/Head';
+import Container from '../../components/Container';
 import Error from '../../components/Error';
 
 const ME_QUERY = gql`
@@ -27,7 +27,7 @@ const Profile = () => {
   const { me: user } = data;
 
   return (
-    <Head title="Profile">
+    <Container title="Profile">
       <h1>Profile</h1>
       <div className="box">
         <h3>Username</h3>
@@ -42,7 +42,7 @@ const Profile = () => {
           </Link>
         </p>
       </div>
-    </Head>
+    </Container>
   );
 };
 
