@@ -4,6 +4,12 @@ Starter project to start easily a project using Node, GraphQL and React.
 
 It includes **backend** and **frontend** code.
 
+### IMPORTANT
+
+If you need type safety and you're working with a team, [this
+project](https://github.com/aboglioli/typescript-graphql) might be a better
+option: using Typescript.
+
 ## Backend
 
 - **Node**: platform.
